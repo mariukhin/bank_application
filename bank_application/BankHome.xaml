@@ -1,0 +1,23 @@
+﻿<Page x:Class="bank_application.BankHome"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:bank_application"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="BankHome">
+	<Page.Triggers>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded"/>
+	</Page.Triggers>
+	<Grid Background="Red">
+		<Path Data="M41.803279,53.893443" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1" Margin="41.803,53.893,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1"/>
+		<Path Data="M35.245902,42.418033 C36.233102,55.471022 36.065574,68.546537 36.065574,81.762295" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="40.344" Margin="35.246,42.418,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.83"/>
+		<Path Data="M36.065574,44.877049 C74.280937,47.849355 113.13929,45.696721 151.63934,45.696721" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="2.573" Margin="36.066,44.877,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="116.573"/>
+		<Path Data="M151.63934,48.97541 C151.63934,59.904372 151.63934,70.833333 151.63934,81.762295" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="33.787" Margin="151.639,48.975,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1"/>
+		<Path Data="M151.63934,83.401639 C114.55202,77.514762 75.841962,80.942623 37.704918,80.942623" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="4.452" Margin="37.705,79.95,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="114.934"/>
+
+
+	</Grid>
+
+</Page>
