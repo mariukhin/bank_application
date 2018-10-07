@@ -15,14 +15,21 @@ using System.Windows.Shapes;
 
 namespace bank_application
 {
-    /// <summary>
-    /// Логика взаимодействия для about.xaml
-    /// </summary>
-    public partial class about : Page
-    {
-        public about()
-        {
-            InitializeComponent();
-        }
-    }
+	/// <summary>
+	/// Логика взаимодействия для ExpenseReportPage.xaml
+	/// </summary>
+	public partial class ExpenseReportPage : Page
+	{
+		public ExpenseReportPage()
+		{
+			InitializeComponent();
+		}
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			// View Expense Report
+			Authorise authorise = new Authorise();
+			this.NavigationService.Navigate(authorise);
+
+		}
+	}
 }

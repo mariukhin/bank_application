@@ -5,5 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bank_application"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="500"  ShowsNavigationUI="False" Source="BankHome.xaml"/>
+        Title="MainWindow" Height="394.4" Width="398"  ShowsNavigationUI="False" Source="Authorise.xaml" Foreground="{x:Null}">
+
+</NavigationWindow>
 	

@@ -1,0 +1,27 @@
+﻿<Page x:Class="bank_application.ExpenseReportPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:bank_application"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="ExpenseIt - View Expense" Background="White">
+
+	<Grid Margin="10,0,10,10">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		
+		<!-- View report button -->
+		<Button Grid.Column="1" Grid.Row="3" Margin="0,10,0,0" Width="125"
+		Height="25" HorizontalAlignment="Right" Click="Button_Click">Return</Button>
+		<Grid.Background>
+			<ImageBrush ImageSource="main_back.png"/>
+		</Grid.Background>
+	</Grid>
+</Page>

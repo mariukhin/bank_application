@@ -16,13 +16,20 @@ using System.Windows.Shapes;
 namespace bank_application
 {
 	/// <summary>
-	/// Логика взаимодействия для BankHome.xaml
+	/// Логика взаимодействия для ExpenseItHome.xaml
 	/// </summary>
-	public partial class BankHome : Page
+	public partial class Authorise : Page
 	{
-		public BankHome()
+		public Authorise()
 		{
 			InitializeComponent();
+		}
+		private void btnAuth_Click(object sender, RoutedEventArgs e)
+		{
+			// View Expense Report
+			ExpenseReportPage expenseReportPage = new ExpenseReportPage();
+			this.NavigationService.Navigate(expenseReportPage);
+
 		}
 	}
 }
