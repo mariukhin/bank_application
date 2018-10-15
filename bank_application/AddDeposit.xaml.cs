@@ -10,26 +10,25 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace bank_application
 {
 	/// <summary>
-	/// Логика взаимодействия для ExpenseItHome.xaml
+	/// Логика взаимодействия для AddDeposit.xaml
 	/// </summary>
-	public partial class Authorise : Page
+	public partial class AddDeposit : Window
 	{
-		public Authorise()
+		public AddDeposit()
 		{
 			InitializeComponent();
 		}
-		private void btnAuth_Click(object sender, RoutedEventArgs e)
-		{
-			// View Expense Report
-			ExpenseReportPage expenseReportPage = new ExpenseReportPage();
-			this.NavigationService.Navigate(expenseReportPage);
 
+		private void btnClickAddDeposit(object sender, RoutedEventArgs e)
+		{
+			//Проверка наличия других депозитов
+			//Deposit deposit = new Deposit();
+			Close();
 		}
 	}
 }

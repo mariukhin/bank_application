@@ -1,0 +1,15 @@
+﻿<Page x:Class="bank_application.Moneybox"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:bank_application"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Moneybox" Width="480" Height="400">
+
+	<Grid>
+		<TextBlock Text="Moneybox" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" Margin="153,53,176,304"/>
+		<Button Content="Transfer" MinWidth="105" MinHeight="50" Click="btnClickTransfer" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="153,225,182,122" FontSize="16" />
+	</Grid>
+</Page>

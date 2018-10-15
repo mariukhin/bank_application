@@ -10,26 +10,26 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace bank_application
 {
 	/// <summary>
-	/// Логика взаимодействия для ExpenseReportPage.xaml
+	/// Логика взаимодействия для AddCard.xaml
 	/// </summary>
-	public partial class ExpenseReportPage : Page
+	public partial class AddCard : Window
 	{
-		public ExpenseReportPage()
+		public AddCard()
 		{
 			InitializeComponent();
 		}
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-			// View Expense Report
-			Authorise authorise = new Authorise();
-			this.NavigationService.Navigate(authorise);
 
+		private void btnClickAddCard(object sender, RoutedEventArgs e)
+		{
+			//0)проверка чекбокса
+			//1)проверка платежеспособности клиента
+			//Card card = new Card()
+			Close();
 		}
 	}
 }

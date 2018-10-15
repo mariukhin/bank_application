@@ -35,8 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Npgsql, Version=2.2.3.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,15 +60,73 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Authorise.xaml">
+    <Compile Include="AddCard.xaml.cs">
+      <DependentUpon>AddCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddCredit.xaml.cs">
+      <DependentUpon>AddCredit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddDeposit.xaml.cs">
+      <DependentUpon>AddDeposit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Base.cs" />
+    <Compile Include="Card.cs" />
+    <Compile Include="CardsPage.xaml.cs">
+      <DependentUpon>CardsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cashback.xaml.cs">
+      <DependentUpon>Cashback.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client.cs" />
+    <Compile Include="Credit.cs" />
+    <Compile Include="CreditsPage.xaml.cs">
+      <DependentUpon>CreditsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Deposit.cs" />
+    <Compile Include="DepositsPage.xaml.cs">
+      <DependentUpon>DepositsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Moneybox.xaml.cs">
+      <DependentUpon>Moneybox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalData.xaml.cs">
+      <DependentUpon>PersonalData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Registration.xaml.cs">
+      <DependentUpon>Registration.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AddCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ExpenseReportPage.xaml">
+    <Page Include="AddCredit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="AddDeposit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CardsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Cashback.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreditsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DepositsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Login.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -71,16 +134,26 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Authorise.xaml.cs">
-      <DependentUpon>Authorise.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ExpenseReportPage.xaml.cs">
-      <DependentUpon>ExpenseReportPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Moneybox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PersonalData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Registration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Simple Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -114,6 +187,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="main_back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="main.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
