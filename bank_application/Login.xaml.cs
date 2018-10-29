@@ -26,8 +26,16 @@ namespace bank_application
 		}
 		private void btnAuth_Click(object sender, RoutedEventArgs e)
 		{
-			MainWindow mainWindow = new MainWindow();
-			mainWindow.Show();
+			if (tbLogin.Text == "admin")
+			{
+				AdminWindow adminWindow = new AdminWindow();
+				adminWindow.Show();
+			}
+			else
+			{
+				MainWindow mainWindow = new MainWindow();
+				mainWindow.Show();
+			}
 
 		}
 		private void btnReg_Click(object sender, RoutedEventArgs e)
