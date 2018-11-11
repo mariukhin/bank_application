@@ -9,6 +9,7 @@ namespace bank_application
     public class Card
     {
 		public string CardNumber { get; set; }
+		public string CardName { get; set; }
 		public int PIN { get; set; }
 		public int CVcode { get; set; }
 		public string Term { get; set; }
@@ -22,9 +23,10 @@ namespace bank_application
 
 		//	}
 		//}
-		public Card(string CardNumber, Client Client, int PIN, int CVcode, string Term, int Money)
+		public Card(string CardNumber,string CardName, Client Client, int PIN, int CVcode, string Term, int Money)
 		{
 			this.CardNumber = CardNumber;
+			this.CardName = CardName;
 			this.PIN = PIN;
 			this.CVcode = CVcode;
 			this.Term = Term;

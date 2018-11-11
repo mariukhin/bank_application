@@ -20,9 +20,11 @@ namespace bank_application
     /// </summary>
     public partial class MainWindow : NavigationWindow
     {
-        public MainWindow()
+		public Client client { get; set; }
+        public MainWindow(Client client)
         {
             InitializeComponent();
+			this.client = client;
         }
 
 		private void btnClickCredits(object sender, RoutedEventArgs e)
@@ -58,6 +60,13 @@ namespace bank_application
 		private void btnCloseClick(object sender, RoutedEventArgs e)
 		{
 			Close();
+		}
+
+		private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+		{
+			
+			client.getCreditsList();
+			//получение всех данных клиента
 		}
 	}
 }

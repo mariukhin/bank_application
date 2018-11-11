@@ -11,6 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data.SQLite;
+using System.IO;
+using System.Data;
+
 
 namespace bank_application
 {
@@ -19,6 +23,9 @@ namespace bank_application
 	/// </summary>
 	public partial class AddCredit : Window
 	{
+		private string dbFileName;
+		private SQLiteConnection m_dbConn;
+		private SQLiteCommand m_sqlCmd;
 		public AddCredit()
 		{
 			InitializeComponent();
@@ -26,12 +33,37 @@ namespace bank_application
 
 		private void btnClickAddCredit(object sender, RoutedEventArgs e)
 		{
-			//0)Если не нажал на checkbtn1, то гудбай!!))
+			if (checkBox1.IsChecked == true)
+			{
+				m_dbConn = new SQLiteConnection();
+				m_sqlCmd = new SQLiteCommand();
+				dbFileName = "BankDB.db";
+
+			}
 			//1)проверка кредита на макс суму
 			//2)проверка возможности данного клиента взять кредит
 
 			//Credit credit = new Credit('mmm', Client, 3, 5000);
 			Close();
+		}
+		private void ConnectToDB()
+		{
+			if (!File.Exists(dbFileName))
+				MessageBox.Show("Please, create DB and blank table (Push \"Create\" button)");
+
+			try
+			{
+				m_dbConn = new SQLiteConnection("Data Source=" + dbFileName + ";Version=3;");
+				m_dbConn.Open();
+				m_sqlCmd.Connection = m_dbConn;
+
+				MessageBox.Show("Connected");
+			}
+			catch (SQLiteException ex)
+			{
+				MessageBox.Show("Disconnected");
+				MessageBox.Show("Error: " + ex.Message);
+			}
 		}
 	}
 }

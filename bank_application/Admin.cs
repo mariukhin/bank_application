@@ -24,6 +24,9 @@ namespace bank_application
 			this.Password = Password;
 			
 		}
-
+		public override string ToString()
+		{
+			return Email + '|' + Surname + '|' + PassportNum + '|' + Firstname + '|' + DateOfBirth;
+		}
 	}
 }

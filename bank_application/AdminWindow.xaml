@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bank_application"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="527.927" Width="1059.024" Loaded="adminWindow_Loaded">
+        Title="AdminWindow" Height="527.927" Width="1230.278" Loaded="adminWindow_Loaded">
 	<Grid>
 		<Grid.Background>
 			<ImageBrush ImageSource="pack://siteoforigin:,,,/main.jpg"/>
 		</Grid.Background>
-		<DataGrid x:Name ="dgvViewer" HorizontalAlignment="Left" Height="416" Margin="174,23,0,0" VerticalAlignment="Top" Width="847" SelectionChanged="DataGrid_SelectionChanged"/>
-		<Button Margin="44,209,900.8,251.4" Width="108" HorizontalAlignment="Center" Click="btnConfirm_Click" Background="#FFE5E5E5" FontFamily="Verdana" FontSize="14" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Confirm"/>
-		<Button Margin="44,369,900.8,91.4" Width="108" HorizontalAlignment="Center" Click="btnReject_Click" Background="#FFE5E5E5" FontFamily="Verdana" FontSize="14" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Reject"/>
-		<Button Margin="913,450,31.8,10.4" Width="108" HorizontalAlignment="Center" Click="btnClose_Click" Background="#FFE5E5E5" FontFamily="Verdana" FontSize="14" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Close"/>
-		<Button Margin="44,40,900.8,420.4" Width="108" HorizontalAlignment="Center" Click="btnRefresh_Click" Background="#FFE5E5E5" FontFamily="Verdana" FontSize="14" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Refresh"/>
+		<DataGrid x:Name ="dgvViewer" HorizontalAlignment="Left" Height="403" Margin="205,34,0,0" VerticalAlignment="Top" Width="987" SelectionChanged="DataGrid_SelectionChanged"/>
+		<Button Margin="44,200,1072,260.4" Width="108" HorizontalAlignment="Center" Click="btnConfirm_Click" Background="#FFE5E5E5" FontFamily="Verdana" FontSize="14" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Confirm"/>
+		<Button Margin="44,369,1072,91.4" Width="108" HorizontalAlignment="Center" Click="btnReject_Click" Background="#FFE5E5E5" FontFamily="Verdana" FontSize="14" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Reject"/>
+		<Button Margin="1084,450,32,10.4" Width="108" HorizontalAlignment="Center" Click="btnClose_Click" Background="#FFE5E5E5" FontFamily="Verdana" FontSize="14" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Close"/>
+		<Button Margin="44,34,1072,426.4" Width="108" HorizontalAlignment="Center" Click="btnRefresh_Click" Background="#FFE5E5E5" FontFamily="Verdana" FontSize="14" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Refresh"/>
 	</Grid>
 </Window>

@@ -27,7 +27,8 @@ namespace bank_application
 
 		private void btnClickGetPersonalData(object sender, RoutedEventArgs e)
 		{
-			//получаем клиента и его персональные данные из класса Client
+			//Client client = new Client();
+			//MessageBox.Show(client.ToString());
 		}
 
 		private void btnClickChangePhone(object sender, RoutedEventArgs e)

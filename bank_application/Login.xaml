@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bank_application"
         mc:Ignorable="d"
-        Title="Login" Height="500" Width="500" Foreground="{x:Null}">
+        Title="Login" Height="500" Width="500" Foreground="{x:Null}" Loaded="LoginWindow_Loaded">
 	<Grid Margin="0,0,0.2,0.2">
 		<Button Margin="102.2,277.4,233.2,123.2" Width="87"
 		Height="25" HorizontalAlignment="Center" Click="btnAuth_Click" Background="#FFE5E5E5" FontFamily="Verdana" FontSize="14" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Grid.Row="1">Login</Button>

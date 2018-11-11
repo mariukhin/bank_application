@@ -94,7 +94,6 @@ namespace bank_application
 				m_dbConn.Open();
 				m_sqlCmd.Connection = m_dbConn;
 
-				MessageBox.Show("Connected");
 			}
 			catch (SQLiteException ex)
 			{

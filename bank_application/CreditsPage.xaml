@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="400"
       Title="Credits" Width="480" Height="400">
-	<Grid Margin="0,0,0,-0.4" Height="450" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="803">
+	<Grid Margin="0,0,0,-0.4" Height="450" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="803" Loaded="CreditsPage_Loaded">
 		<Button Content="Add new credit" MinWidth="105" MinHeight="50" Click="btnClickAddCredit" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="24,127,634,271" FontSize="16" />
 		<Button Content="Pay off debt" MinWidth="105" MinHeight="50" Click="btnClickPayOffDebt" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="24,302,634,95" FontSize="16" />
 		<ListBox HorizontalAlignment="Left" Height="331" Margin="197,80,0,0" VerticalAlignment="Top" Width="282"/>

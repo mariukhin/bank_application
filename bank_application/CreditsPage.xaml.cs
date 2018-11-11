@@ -34,5 +34,10 @@ namespace bank_application
 		{
 			//перемещение на страницу погашения долга(личного кошелька)
 		}
+
+		private void CreditsPage_Loaded(object sender, RoutedEventArgs e)
+		{
+			
+		}
 	}
 }

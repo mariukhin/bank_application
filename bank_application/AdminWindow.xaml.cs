@@ -74,26 +74,6 @@ namespace bank_application
 
 			dgvViewer.ItemsSource = dataTable.DefaultView;
 			sqlAdapter.Update(dataTable);
-			//try
-			//{
-			//	sqlQuery = "SELECT * FROM Catalog";
-			//	SQLiteDataAdapter adapter = new SQLiteDataAdapter(sqlQuery, m_dbConn);
-			//	adapter.Fill(dTable);
-
-			//	if (dTable.Rows.Count > 0)
-			//	{
-			//		dgvViewer.Rows.Clear();
-
-			//		for (int i = 0; i < dTable.Rows.Count; i++)
-			//			dgvViewer.Rows.Add(dTable.Rows[i].ItemArray);
-			//	}
-			//	else
-			//		MessageBox.Show("Database is empty");
-			//}
-			//catch (SQLiteException ex)
-			//{
-			//	MessageBox.Show("Error: " + ex.Message);
-			//}
 		}
 		private void ConnectToDB()
 		{

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bank_application"
         mc:Ignorable="d"
-        Title="MainWindow" Height="470.4" Width="721.6" Background="#FFAEAEAE" ShowsNavigationUI="False">
+        Title="MainWindow" Height="470.4" Width="721.6" Background="#FFAEAEAE" ShowsNavigationUI="False" Loaded="MainWindow_Loaded">
 	<NavigationWindow.Content>
 
 		<Grid>

@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="AddCard" Height="222" Width="260.8">
 	<Grid Background="#FFF3DEDE">
-		<Label Content="Count" HorizontalAlignment="Left" Margin="37,16,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29"/>
-		<TextBox x:Name ="tbCount" HorizontalAlignment="Left" Height="18" Margin="117,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.813,0.514"/>
-		<Label Content="Duration" HorizontalAlignment="Left" Margin="24,55,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29"/>
-		<TextBox x:Name ="tbDuration" HorizontalAlignment="Left" Height="18" Margin="117,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.813,0.514"/>
+		<Label Content="Card Name" HorizontalAlignment="Left" Margin="24,19,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29"/>
+		<TextBox x:Name ="tbcardName" HorizontalAlignment="Left" Height="18" Margin="117,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.813,0.514"/>
+		<Label Content="PIN" HorizontalAlignment="Left" Margin="50,53,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29" RenderTransformOrigin="1.17,0.455"/>
+		<TextBox x:Name ="tbPIN" HorizontalAlignment="Left" Height="18" Margin="117,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.813,0.514"/>
 		<Button Content="Add" MinWidth="50" MinHeight="20" Click="btnClickAddCard" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="97,132,99.4,33.8" FontSize="16" />
 		<CheckBox x:Name ="checkBox1" Content="I agree with all agreenment" HorizontalAlignment="Left" FontFamily="Verdana" FontSize="12" Margin="24,99,0,0" VerticalAlignment="Top"/>
 

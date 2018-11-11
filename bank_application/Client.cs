@@ -120,7 +120,7 @@ namespace bank_application
 		}
 		public override string ToString()
 		{
-			return Login;
+			return Login + '|'+ Surname+ '|'+ PassportNum+ '|'+ Firstname;
 		}
 	}
 }
