@@ -1,0 +1,40 @@
+﻿<NavigationWindow x:Class="bank_application.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bank_application"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="470.4" Width="721.6" Background="#FFAEAEAE" ShowsNavigationUI="False" >
+	<NavigationWindow.Content>
+		<Grid>
+			<Grid.Background>
+				<ImageBrush ImageSource="main.jpg"/>
+			</Grid.Background>
+			<!--<Grid.Background>
+				<ImageBrush ImageSource="pack://siteoforigin:,,,/main.jpg"/>
+			</Grid.Background>-->
+			<!--<Menu Margin="0,0,0,0" Height="22" Name="menu1" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+				<MenuItem Header="File">
+					<MenuItem Header="New" />
+					<MenuItem Header="Load ..." />
+					<MenuItem Header="Save ..." />
+					<MenuItem Header="Exit" />
+				</MenuItem>
+			</Menu>-->
+			<StackPanel Margin="0,47,0,0" Orientation="Vertical" Height="350" HorizontalAlignment="Left" VerticalAlignment="Top">
+				<Button Content="Credits" MinWidth="105" MinHeight="50" Click="btnClickCredits" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" ></Button>
+				<Button Content="Deposits" MinWidth="105" MinHeight="50" Click="btnClickDeposits" Margin="0, 10, 0, 0" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}"/>
+				<Button Content="My Cards" MinWidth="105" MinHeight="50" Click="btnClickMyCards" Margin="0,10,0,0" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}"/>
+				<Button Content="Cashback" MinWidth="105" MinHeight="50" Click="btnClickCashback" Margin="0,10,0,0" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}"/>
+				<Button Content="Moneybox" MinWidth="105" MinHeight="50" Click="btnClickMoneybox" Margin="0,10, 0, 0" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}"/>
+				<Button Content="Personal data" MinWidth="105" MinHeight="50" Click="btnClickPersonalData" Margin="0,10, 0, 0" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}"/>
+			</StackPanel>
+			<Frame x:Name="Main"  Margin="105,47,0.2,45.8" NavigationUIVisibility="Hidden"/>
+			<Button Margin="614,400,10.2,9.8" Width="91" HorizontalAlignment="Center" Click="btnCloseClick" Background="#FFE5E5E5" FontFamily="Verdana" FontSize="14" BorderBrush="{DynamicResource DefaultedBorderBrush}" RenderTransformOrigin="0.5,0.5" Content="Close"/>
+			<Label Content="{Binding ClientName}" HorizontalAlignment="Left" Margin="229,10,0,0" VerticalAlignment="Top" Width="222" Foreground="DarkOrange" FontStyle="Italic" FontFamily="Verdana" FontSize="16"/>
+		</Grid>
+	</NavigationWindow.Content>
+
+
+</NavigationWindow>

@@ -78,85 +78,91 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddCard.xaml.cs">
+    <Compile Include="Command\AdminDeterminant.cs" />
+    <Compile Include="Command\DBhelperClass.cs" />
+    <Compile Include="UI\AddCard.xaml.cs">
       <DependentUpon>AddCard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddCredit.xaml.cs">
+    <Compile Include="UI\AddCredit.xaml.cs">
       <DependentUpon>AddCredit.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddDeposit.xaml.cs">
+    <Compile Include="UI\AddDeposit.xaml.cs">
       <DependentUpon>AddDeposit.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Admin.cs" />
-    <Compile Include="AdminWindow.xaml.cs">
+    <Compile Include="Command\RelayCommand.cs" />
+    <Compile Include="Model\Admin.cs" />
+    <Compile Include="UI\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Base.cs" />
-    <Compile Include="Card.cs" />
-    <Compile Include="CardsPage.xaml.cs">
+    <Compile Include="Model\Card.cs" />
+    <Compile Include="UI\CardsPage.xaml.cs">
       <DependentUpon>CardsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Cashback.xaml.cs">
+    <Compile Include="UI\Cashback.xaml.cs">
       <DependentUpon>Cashback.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Client.cs" />
-    <Compile Include="Credit.cs" />
-    <Compile Include="CreditsPage.xaml.cs">
+    <Compile Include="Model\Client.cs" />
+    <Compile Include="Model\Credit.cs" />
+    <Compile Include="UI\CreditsPage.xaml.cs">
       <DependentUpon>CreditsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DbClass.cs" />
-    <Compile Include="Deposit.cs" />
-    <Compile Include="DepositsPage.xaml.cs">
+    <Compile Include="Model\Deposit.cs" />
+    <Compile Include="UI\DepositsPage.xaml.cs">
       <DependentUpon>DepositsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="UI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Moneybox.xaml.cs">
+    <Compile Include="UI\Moneybox.xaml.cs">
       <DependentUpon>Moneybox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PersonalData.xaml.cs">
+    <Compile Include="UI\PersonalData.xaml.cs">
       <DependentUpon>PersonalData.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Registration.xaml.cs">
+    <Compile Include="UI\Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Request.cs" />
-    <Compile Include="Transaction.cs" />
-    <Compile Include="User.cs" />
-    <Page Include="AddCard.xaml">
+    <Compile Include="Model\Request.cs" />
+    <Compile Include="Model\Transaction.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="UI\TransferMoney.xaml.cs">
+      <DependentUpon>TransferMoney.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\AdminViewModel.cs" />
+    <Compile Include="ViewModel\ClientViewModel.cs" />
+    <Page Include="UI\AddCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddCredit.xaml">
+    <Page Include="UI\AddCredit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddDeposit.xaml">
+    <Page Include="UI\AddDeposit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AdminWindow.xaml">
+    <Page Include="UI\AdminWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CardsPage.xaml">
+    <Page Include="UI\CardsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Cashback.xaml">
+    <Page Include="UI\Cashback.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CreditsPage.xaml">
+    <Page Include="UI\CreditsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DepositsPage.xaml">
+    <Page Include="UI\DepositsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Login.xaml">
+    <Page Include="UI\Login.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -164,29 +170,33 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Login.xaml.cs">
+    <Compile Include="UI\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="UI\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Moneybox.xaml">
+    <Page Include="UI\Moneybox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PersonalData.xaml">
+    <Page Include="UI\PersonalData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Registration.xaml">
+    <Page Include="UI\Registration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Simple Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\TransferMoney.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +216,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -217,10 +228,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="main_back.png" />
+    <Resource Include="img\main_back.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="main.jpg" />
+    <None Include="img\main.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UI\main.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" />
