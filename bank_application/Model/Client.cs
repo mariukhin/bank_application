@@ -1,9 +1,5 @@
-﻿using System;
-using System.Data.SQLite;
+﻿using System.Data.SQLite;
 using System.Collections.ObjectModel;
-using System.Configuration;
-using System.Data;
-using System.Windows;
 
 namespace bank_application
 {
@@ -16,11 +12,6 @@ namespace bank_application
 		private string login;
 		private double cashback;
 		private int moneybox;
-
-		public void AddCreditToList(Credit credit)
-		{
-			Credits.Add(credit);
-		}
 
 		public Client(int Id,string Firstname, string Surname, string DateOfBirth, string PassportSeries, int PassportNum,
 			string Adress, string Email, string Phonenumber, string Login, string Password, double Cashback, int Moneybox) : base(Id, Firstname, Surname, DateOfBirth, PassportSeries, PassportNum, Adress, Email, Phonenumber, Password)

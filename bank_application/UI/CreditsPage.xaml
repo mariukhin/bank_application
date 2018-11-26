@@ -23,7 +23,7 @@
 							</Border>
 							<ControlTemplate.Triggers>
 								<Trigger Property="IsSelected" Value="true">
-									<Setter Property="BorderBrush" TargetName="ItemBorder" Value="Blue"/>
+									<Setter Property="BorderBrush" TargetName="ItemBorder" Value="DarkOrange"/>
 								</Trigger>
 							</ControlTemplate.Triggers>
 						</ControlTemplate>
@@ -32,10 +32,10 @@
 			</Style>
 
 		</Grid.Resources>
-		
-		<Button Content="Add new credit" MinWidth="105" MinHeight="50" Click="btnClickAddCredit" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="24,127,634,271" FontSize="16" />
-		<Button Content="Pay off debt" MinWidth="105" MinHeight="50" Click="btnClickPayOffDebt" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="24,302,634,95" FontSize="16" />
-		<ListBox ItemsSource="{Binding Credits}" SelectedItem="{Binding SelectedCredit}"
+
+		<Button Command="{Binding OpenAddCreditCommand}" Content="Add new credit" MinWidth="105" MinHeight="50"  FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="24,127,634,271" FontSize="16" />
+		<Button Command="{Binding OpenPayDebtCommand}" Content="Pay off debt" MinWidth="105" MinHeight="50"  FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="24,302,634,95" FontSize="16" />
+		<ListBox ItemsSource="{Binding Credits}" SelectedItem="{Binding SelectedCredit}" ItemContainerStyle="{StaticResource ItemContainerCredit}"
 				   HorizontalAlignment="Left" Height="331" Margin="197,80,0,0" VerticalAlignment="Top" Width="282">
 			<ListBox.ItemTemplate>
 			<DataTemplate>
@@ -43,14 +43,16 @@
 					<DockPanel>
 						<TextBlock FontWeight="Bold" Text="Duration:" DockPanel.Dock="Left" Margin="5,0,5,0" />
 						<TextBlock Text="{Binding Duration}" Foreground="Green" FontWeight="SemiBold" />
+						<TextBlock Text=" month" Foreground="Green" FontWeight="SemiBold" />
 					</DockPanel>
 					<DockPanel>
 						<TextBlock FontWeight="Bold" Text="CardNumber:" DockPanel.Dock="Left" Margin="5,0,5,0" />
 						<TextBlock Text="{Binding CardNumber}" Foreground="Green" FontWeight="SemiBold" />
 					</DockPanel>
 					<DockPanel>
-						<TextBlock FontWeight="Bold" Text="Number:" DockPanel.Dock="Left" Margin="5,0,5,0" />
+						<TextBlock FontWeight="Bold" Text="Money:" DockPanel.Dock="Left" Margin="5,0,5,0" />
 						<TextBlock Text="{Binding Number}" Foreground="Green" FontWeight="SemiBold" />
+						<TextBlock Text=" grn" Foreground="Green" FontWeight="SemiBold" />
 					</DockPanel>
 				</StackPanel>
 			</DataTemplate>

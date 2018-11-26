@@ -78,6 +78,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Animation\WindowStyle.xaml.cs">
+      <DependentUpon>WindowStyle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Command\AdminDeterminant.cs" />
     <Compile Include="Command\DBhelperClass.cs" />
     <Compile Include="UI\AddCard.xaml.cs">
@@ -125,11 +128,18 @@
     <Compile Include="Model\Request.cs" />
     <Compile Include="Model\Transaction.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="UI\TransferCashback.xaml.cs">
+      <DependentUpon>TransferCashback.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\TransferMoney.xaml.cs">
       <DependentUpon>TransferMoney.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AdminViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
+    <Page Include="Animation\WindowStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\AddCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -193,6 +203,10 @@
     <Page Include="Simple Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\TransferCashback.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\TransferMoney.xaml">
       <SubType>Designer</SubType>

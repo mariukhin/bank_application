@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using bank_application.ViewModel;
 
@@ -14,17 +9,10 @@ namespace bank_application
     /// </summary>
     public partial class DepositsPage : Page
     {
-		ClientViewModel nuvm;
         public DepositsPage(ClientViewModel uvm)
         {
             InitializeComponent();
-			nuvm = uvm;
 			DataContext = uvm;
-		}
-		private void btnClickAddDeposit(object sender, RoutedEventArgs e)
-		{
-			AddDeposit addDeposit = new AddDeposit(nuvm);
-			addDeposit.Show();
 		}
 		private void btnClickCancelDeposit(object sender, RoutedEventArgs e)
 		{

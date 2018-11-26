@@ -9,7 +9,7 @@
       Title="Cashback" Width="480" Height="400">
 
 	<Grid>
-		<TextBlock Text="Cashback" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" Margin="165,54,182,304"/>
-		<Button Content="Transfer" MinWidth="105" MinHeight="50" Click="btnClickTransfer" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="165,213,170,134" FontSize="16" />
+		<Label Content="{Binding Cashback}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" Foreground="DarkOrange" FontStyle="Italic" FontFamily="Verdana" Margin="165,54,182,304"/>
+		<Button Command="{Binding OpenTransferCashCommand}" Content="Transfer" MinWidth="105" MinHeight="50"  FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="165,213,170,134" FontSize="16" />
 	</Grid>
 </Page>

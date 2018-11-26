@@ -1,0 +1,33 @@
+﻿<Window x:Class="bank_application.UI.TransferCashback"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bank_application.UI"
+        mc:Ignorable="d"
+        Title="TransferCashback" Height="170.961" Width="319.036">
+	<Grid Background="#FFF3DEDE">
+		<Label Content="Your card" HorizontalAlignment="Left" Margin="18,22,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29"/>
+		<ComboBox ItemsSource="{Binding Cards}"  
+		 SelectedItem="{Binding TransferCashbackCard}"  
+		 Width="173"  
+		 HorizontalAlignment="Left"   
+		 Margin="126,22,0,0"   
+		 VerticalAlignment="Top" RenderTransformOrigin="0.224,3.02"  >
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Orientation="Horizontal">
+						<DockPanel>
+							<TextBlock Text="{Binding CardNumber}" DockPanel.Dock="Left"/>
+							<TextBlock Text=" - "/>
+							<TextBlock Text="{Binding Money}"/>
+						</DockPanel>
+					</StackPanel>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+		<Button Command="{Binding TransferCashbackCommand}" Content="Transfer" MinWidth="50" MinHeight="20" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="110,99,112.8,13.6" FontSize="16" />
+		<CheckBox IsChecked="{Binding Checked}" x:Name ="checkBox1" Content="I agree with all agreenment" HorizontalAlignment="Left" FontFamily="Verdana" FontSize="12" Margin="61,69,0,0" VerticalAlignment="Top"/>
+
+	</Grid>
+</Window>

@@ -23,10 +23,43 @@
 				</MenuItem>
 			</Menu>-->
 			<StackPanel Margin="0,47,0,0" Orientation="Vertical" Height="350" HorizontalAlignment="Left" VerticalAlignment="Top">
-				<Button Content="Credits" MinWidth="105" MinHeight="50" Click="btnClickCredits" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" ></Button>
-				<Button Content="Deposits" MinWidth="105" MinHeight="50" Click="btnClickDeposits" Margin="0, 10, 0, 0" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}"/>
-				<Button Content="My Cards" MinWidth="105" MinHeight="50" Click="btnClickMyCards" Margin="0,10,0,0" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}"/>
-				<Button Content="Cashback" MinWidth="105" MinHeight="50" Click="btnClickCashback" Margin="0,10,0,0" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}"/>
+				<Button Content="Credits" MinWidth="105" MinHeight="50" Click="btnClickCredits" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" >
+					<Button.Style>
+						<Style TargetType="{x:Type Button}">
+							<Style.Triggers>
+								<Trigger Property="IsMouseOver" Value="True">
+									<Setter Property="Background" Value="#FFB4F31D"/>
+									<Setter Property="Foreground" Value="#000000"/>
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</Button.Style>
+				</Button>
+				<Button Content="Deposits" MinWidth="105" MinHeight="50" Click="btnClickDeposits" Margin="0, 10, 0, 0" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}">
+					<Button.Style>
+						<Style TargetType="{x:Type Button}">
+							<Style.Triggers>
+								<Trigger Property="IsMouseOver" Value="True">
+									<Setter Property="Background" Value="#FFB4F31D"/>
+									<Setter Property="Foreground" Value="#000000"/>
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</Button.Style>
+				</Button>
+				<Button Content="My Cards" MinWidth="105" MinHeight="50" Click="btnClickMyCards" Margin="0,10,0,0" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}">
+					<Button.Style>
+						<Style TargetType="{x:Type Button}">
+							<Style.Triggers>
+								<Trigger Property="IsMouseOver" Value="True">
+									<Setter Property="Background" Value="#FFB4F31D"/>
+									<Setter Property="Foreground" Value="#000000"/>
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</Button.Style>
+				</Button>
+					<Button Content="Cashback" MinWidth="105" MinHeight="50" Click="btnClickCashback" Margin="0,10,0,0" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}"/>
 				<Button Content="Moneybox" MinWidth="105" MinHeight="50" Click="btnClickMoneybox" Margin="0,10, 0, 0" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}"/>
 				<Button Content="Personal data" MinWidth="105" MinHeight="50" Click="btnClickPersonalData" Margin="0,10, 0, 0" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}"/>
 			</StackPanel>

@@ -9,8 +9,56 @@
       Title="Deposits" Width="480" Height="400">
 
 	<Grid Margin="0,0,0,-0.4" Height="450" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="803">
-		<ListBox ItemsSource="{Binding Deposits}" HorizontalAlignment="Left" Height="331" Margin="197,80,0,0" VerticalAlignment="Top" Width="282"/>
-		<Button Content="Add new deposit" MinWidth="105" MinHeight="50" Click="btnClickAddDeposit" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="21,102,624,296" FontSize="16" />
+		<Grid.Resources>
+			<Style x:Key="ItemContainer" TargetType="{x:Type ListBoxItem}">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type ListBoxItem}">
+							<Border
+                    CornerRadius="2"
+					BorderBrush="Black"
+                    BorderThickness="1"
+                    x:Name="ItemBorder">
+								<ContentPresenter />
+							</Border>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsSelected" Value="true">
+									<Setter Property="BorderBrush" TargetName="ItemBorder" Value="DarkOrange"/>
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+
+		</Grid.Resources>
+		<ListBox ItemsSource="{Binding Deposits}" SelectedItem="{Binding SelectedDeposit}" ItemContainerStyle="{StaticResource ItemContainer}" HorizontalAlignment="Left" Height="331" Margin="197,80,0,0" VerticalAlignment="Top" Width="282">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Margin="5">
+						<DockPanel>
+							<TextBlock FontWeight="Bold" Text="Duration:" DockPanel.Dock="Left" Margin="5,0,5,0" />
+							<TextBlock Text="{Binding Duration}" Foreground="Green" FontWeight="SemiBold" />
+							<TextBlock Text=" month" Foreground="Green" FontWeight="SemiBold" />
+						</DockPanel>
+						<DockPanel>
+							<TextBlock FontWeight="Bold" Text="CardNumber:" DockPanel.Dock="Left" Margin="5,0,5,0" />
+							<TextBlock Text="{Binding CardNumber}" Foreground="Green" FontWeight="SemiBold" />
+						</DockPanel>
+						<DockPanel>
+							<TextBlock FontWeight="Bold" Text="Money:" DockPanel.Dock="Left" Margin="5,0,5,0" />
+							<TextBlock Text="{Binding Number}" Foreground="Green" FontWeight="SemiBold" />
+							<TextBlock Text=" grn" Foreground="Green" FontWeight="SemiBold" />
+						</DockPanel>
+						<DockPanel>
+							<TextBlock FontWeight="Bold" Text="Type:" DockPanel.Dock="Left" Margin="5,0,5,0" />
+							<TextBlock Text="{Binding Type}" Foreground="Green" FontWeight="SemiBold" />
+						</DockPanel>
+					</StackPanel>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<Button Command="{Binding OpenAddDepositCommand}" Content="Add new deposit" MinWidth="105" MinHeight="50" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="21,102,624,296" FontSize="16" />
 		<Button Content="Cancel deposit" MinWidth="105" MinHeight="50" Click="btnClickCancelDeposit" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="21,213,624,186" FontSize="16" />
 		<Button Content="Prolong deposit" MinWidth="105" MinHeight="50" Click="btnClickProlongDeposit" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="21,331,624,67" FontSize="16" />
 	</Grid>

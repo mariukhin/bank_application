@@ -19,7 +19,7 @@
 							</Border>
 							<ControlTemplate.Triggers>
 								<Trigger Property="IsSelected" Value="true">
-									<Setter Property="BorderBrush" TargetName="ItemBorder" Value="Blue"/>
+									<Setter Property="BorderBrush" TargetName="ItemBorder" Value="DarkOrange"/>
 								</Trigger>
 								<!--<Trigger Property="IsMouseOver" Value="true">
 									<Setter Property="Background" TargetName="ListBoxItem" Value="Blue"/>
@@ -32,9 +32,9 @@
 			</Style>
 
 		</Grid.Resources>
-		
-		<Button Content="Add new card" MinWidth="105" MinHeight="50" Click="btnClickAddCard" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,46,320,302" FontSize="16" />
-		<Button Content="Transfer" MinWidth="105" MinHeight="50" Click="btnClickTransfer" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,156,320,191" FontSize="16" />
+
+		<Button Command="{Binding OpenAddCardCommand}" Content="Add new card" MinWidth="105" MinHeight="50" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,46,320,302" FontSize="16" />
+		<Button   Command="{Binding OpenTransferCommand}" Content="Transfer" MinWidth="105" MinHeight="50" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,156,320,191" FontSize="16" />
 		<Button Content="Top up mobile" MinWidth="105" MinHeight="50" Click="btnClickTopUp" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,268,320,79" FontSize="16" />
 		<ListBox ItemsSource="{Binding Cards}" SelectedItem="{Binding SelectedCard}"
 				  ItemContainerStyle="{StaticResource ItemContainer}" HorizontalAlignment="Left" Height="331" Margin="188,23,0,0" VerticalAlignment="Top" Width="282">

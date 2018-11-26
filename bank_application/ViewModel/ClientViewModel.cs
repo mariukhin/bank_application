@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading.Tasks;
+using bank_application.UI;
 using System.Windows;
 using bank_application.Command;
 
@@ -80,14 +77,63 @@ namespace bank_application.ViewModel
 		private string transfermoney;
 
 
-		public ClientViewModel() { }
+		/// <summary>
+		/// Cashback
+		/// </summary>
+		private Card transfercashbackcard;
 
+		public ClientViewModel() { }
 		public ClientViewModel(string Login, string Password)
 		{
 			this.Login = Login;
 			this.Password = Password;
 		}
 
+		private RelayCommand transferCashbackCommand;
+		public RelayCommand TransferCashbackCommand
+		{
+			get
+			{
+				return transferCashbackCommand ??
+					(transferCashbackCommand = new RelayCommand(obj =>
+					{
+						if (Checked == true)
+						{
+							if (TransferCashbackCard != null)
+							{
+								int newMoney = TransferCashbackCard.Money + (int)Client.Cashback;
+								TransferCashbackCard.UpdateCardMoney(TransferCashbackCard, newMoney);
+								Client.UpdateCashback(Client, 0.0);
+								Cards.Clear();
+								Cashback = 0;
+								Cards = Client.CreateCards(Client.Id);
+								Application.Current.Windows[2].Close();		
+							}
+							else
+							{
+								MessageBox.Show("Full all fields!");
+							}
+						}
+						else
+						{
+							MessageBox.Show("You have to agree with all agreenments");
+						}
+					}));
+			}
+		}
+		private RelayCommand openTransferCashCommand;
+		public RelayCommand OpenTransferCashCommand
+		{
+			get
+			{
+				return openTransferCashCommand ??
+					(openTransferCashCommand = new RelayCommand(obj =>
+					{
+						TransferCashback transferCash = new TransferCashback(this);
+						transferCash.Show();
+					}));
+			}
+		}
 		private RelayCommand transferMoneyCommand;
 		public RelayCommand TransferMoneyCommand
 		{
@@ -133,6 +179,19 @@ namespace bank_application.ViewModel
 					}));
 			}
 		}
+		private RelayCommand openTransferCommand;
+		public RelayCommand OpenTransferCommand
+		{
+			get
+			{
+				return openTransferCommand ??
+					(openTransferCommand = new RelayCommand(obj =>
+					{
+						TransferMoney  transferMoney = new TransferMoney(this);
+						transferMoney.Show();
+					}));
+			}
+		}
 
 		private RelayCommand addCardCommand;
 		public RelayCommand AddCardCommand
@@ -173,7 +232,19 @@ namespace bank_application.ViewModel
 					}));
 			}
 		}
-
+		private RelayCommand openAddCardCommand;
+		public RelayCommand OpenAddCardCommand
+		{
+			get
+			{
+				return openAddCardCommand ??
+					(openAddCardCommand = new RelayCommand(obj =>
+					{
+						AddCard addCard = new AddCard(this);
+						addCard.Show();
+					}));
+			}
+		}
 		private RelayCommand addDepositCommand;
 		public RelayCommand AddDepositCommand
 		{
@@ -229,7 +300,32 @@ namespace bank_application.ViewModel
 			}
 		}
 
+		private RelayCommand openAddDepositCommand;
+		public RelayCommand OpenAddDepositCommand
+		{
+			get
+			{
+				return openAddDepositCommand ??
+					(openAddDepositCommand = new RelayCommand(obj =>
+					{
+						AddDeposit addDeposit = new AddDeposit(this);
+						addDeposit.Show();
+					}));
+			}
+		}
 
+		private RelayCommand openPayDebtCommand;
+		public RelayCommand OpenPayDebtCommand
+		{
+			get
+			{
+				return openPayDebtCommand ??
+					(openPayDebtCommand = new RelayCommand(obj =>
+					{
+						//--------------
+					}));
+			}
+		}
 
 		private RelayCommand addCreditCommand;
 		public RelayCommand AddCreditCommand
@@ -268,6 +364,19 @@ namespace bank_application.ViewModel
 						{
 							MessageBox.Show("You have to agree with all agreenments");
 						}
+					}));
+			}
+		}
+		private RelayCommand openAddCreditCommand;
+		public RelayCommand OpenAddCreditCommand
+		{
+			get
+			{
+				return openAddCreditCommand ??
+					(openAddCreditCommand = new RelayCommand(obj =>
+					{
+						AddCredit addCredit = new AddCredit(this);
+						addCredit.Show();
 					}));
 			}
 		}
@@ -344,6 +453,17 @@ namespace bank_application.ViewModel
 							MessageBox.Show("Put your data!");
 						}
 					}));
+			}
+		}
+
+
+		public Card TransferCashbackCard
+		{
+			get { return transfercashbackcard; }
+			set
+			{
+				transfercashbackcard = value;
+				OnPropertyChanged("TransferCashbackCard");
 			}
 		}
 
@@ -735,6 +855,15 @@ namespace bank_application.ViewModel
 			{
 				paspnum = value;
 				OnPropertyChanged("PaspNum");
+			}
+		}
+		public double Cashback
+		{
+			get { return Client.Cashback; }
+			set
+			{
+				Client.Cashback = value;
+				OnPropertyChanged("Cashback");
 			}
 		}
 		public event PropertyChangedEventHandler PropertyChanged;
