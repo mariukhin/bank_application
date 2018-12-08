@@ -47,6 +47,7 @@ namespace bank_application.ViewModel
 		/// Deposit
 		/// </summary>
 		private Deposit deposit;
+		private Deposit selDeposit;
 		private string durationDep;
 		private string numberDep;
 		private Card cardnumberdep;
@@ -60,6 +61,7 @@ namespace bank_application.ViewModel
 		/// Card
 		/// </summary>
 		private Card card;
+		private Card selCard;
 		private string cardnumber;
 		private string cardname;
 		private string pin;
@@ -82,11 +84,97 @@ namespace bank_application.ViewModel
 		/// </summary>
 		private Card transfercashbackcard;
 
+		/// <summary>
+		/// PersonalData
+		/// </summary>
+		private string ChangeDataType;
+		private string changedata;
+
 		public ClientViewModel() { }
 		public ClientViewModel(string Login, string Password)
 		{
 			this.Login = Login;
 			this.Password = Password;
+		}
+		private RelayCommand changeDataCommand;
+		public RelayCommand ChangeDataCommand
+		{
+			get
+			{
+				return changeDataCommand ??
+					(changeDataCommand = new RelayCommand(obj =>
+					{
+						if (ChangeData != null)
+						{
+							Client.UpdateInfo(ChangeDataType, ChangeData, Client);
+							if (ChangeDataType == "e-mail" || ChangeDataType == "phone")
+							{
+								Client.UpdateLogin(ChangeData, Client);
+							}
+							Application.Current.Windows[2].Close();
+						}
+						else
+						{
+							MessageBox.Show("Full all fields!");
+						}
+					}));
+			}
+		}
+
+		private RelayCommand openChangeDataCommand;
+		public RelayCommand OpenChangeDataCommand
+		{
+			get
+			{
+				return openChangeDataCommand ??
+					(openChangeDataCommand = new RelayCommand(obj =>
+					{
+						ChangeData changeData = new ChangeData(this);
+						changeData.Show();
+						ChangeDataType = obj.ToString();
+					}));
+			}
+		}
+		private RelayCommand removeCardCommand;
+		public RelayCommand RemoveCardCommand
+		{
+			get
+			{
+				return removeCardCommand ??
+					(removeCardCommand = new RelayCommand(obj =>
+					{
+						if (SelectedCard.Money == 0)
+						{
+							Client.DeleteSelectedItem(SelectedCard.Id, "card");
+							Cards.Remove(SelectedCard);
+						}
+						else
+						{
+							MessageBox.Show("You have money on this card!");
+						}
+					}));
+			}
+		}
+		private RelayCommand cancelDepositCommand;
+		public RelayCommand CancelDepositCommand
+		{
+			get
+			{
+				return cancelDepositCommand ??
+					(cancelDepositCommand = new RelayCommand(obj =>
+					{
+						
+						if (SelectedDeposit.Type != "Without early interruption")
+						{
+							Client.DeleteSelectedItem(SelectedDeposit.Id, "deposit");
+							Deposits.Remove(SelectedDeposit);
+						}
+						else
+						{
+							MessageBox.Show("Your deposit type isn't good");
+						}
+					}));
+			}
 		}
 
 		private RelayCommand transferCashbackCommand;
@@ -211,7 +299,8 @@ namespace bank_application.ViewModel
 								{
 									Card.AddNewCard(Card);
 									Card = Card.GetCurrentCard(Card);
-									Request = new Request(1, Client.Id, 2, Card.Id, DateTime.Now, "Add new card");
+									Random rand = new Random();
+									Request = new Request(1, Client.Id, rand.Next(1, 5), Card.Id, DateTime.Now, "Add new card");
 									Request.AddNewRequest(Request);
 									Application.Current.Windows[2].Close();
 								}
@@ -273,7 +362,8 @@ namespace bank_application.ViewModel
 									if (Deposit.AddNewDeposit(Deposit, CardNumberDep))
 									{
 										Deposit = Deposit.GetCurrentDeposit(Deposit);
-										Request = new Request(1, Client.Id, 2, Deposit.Id, DateTime.Now, "Add new deposit");
+										Random rand = new Random();
+										Request = new Request(1, Client.Id, rand.Next(1,5), Deposit.Id, DateTime.Now, "Add new deposit");
 										Request.AddNewRequest(Request);
 										Application.Current.Windows[2].Close();
 									}
@@ -346,7 +436,8 @@ namespace bank_application.ViewModel
 								{
 									Credit.AddNewCredit(Credit, CardNumberCr);
 									Credit = Credit.GetCurrentCredit(Credit);
-									Request = new Request(1, Client.Id, 2, Credit.Id, DateTime.Now, "Add new credit");
+									Random rand = new Random();
+									Request = new Request(1, Client.Id, rand.Next(1, 5), Credit.Id, DateTime.Now, "Add new credit");
 									Request.AddNewRequest(Request);
 									Application.Current.Windows[2].Close();
 								}
@@ -455,8 +546,25 @@ namespace bank_application.ViewModel
 					}));
 			}
 		}
+		public string ChangeData
+		{
+			get { return changedata; }
+			set
+			{
+				changedata = value;
+				OnPropertyChanged("ChangeData");
+			}
+		}
 
-
+		public Card SelectedCard
+		{
+			get { return selCard; }
+			set
+			{
+				selCard = value;
+				OnPropertyChanged("SelectedCard");
+			}
+		}
 		public Card TransferCashbackCard
 		{
 			get { return transfercashbackcard; }
@@ -589,6 +697,15 @@ namespace bank_application.ViewModel
 
 
 
+		public Deposit SelectedDeposit
+		{
+			get { return selDeposit; }
+			set
+			{
+				selDeposit = value;
+				OnPropertyChanged("SelectedDeposit");
+			}
+		}
 
 		public Deposit Deposit
 		{
@@ -778,7 +895,14 @@ namespace bank_application.ViewModel
 		}
 		public string FirstName
 		{
-			get { return firstname; }
+			get
+			{
+				if (client != null)
+				{
+					return client.Firstname;
+				}
+				return firstname;
+			}
 			set
 			{
 				firstname = value;
@@ -787,7 +911,14 @@ namespace bank_application.ViewModel
 		}
 		public string SurName
 		{
-			get { return surname; }
+			get
+			{
+				if (client != null)
+				{
+					return client.Surname;
+				}
+				return surname;
+			}
 			set
 			{
 				surname = value;
@@ -796,7 +927,14 @@ namespace bank_application.ViewModel
 		}
 		public string DateOfBirth
 		{
-			get { return dateofbirth; }
+			get
+			{
+				if (client != null)
+				{
+					return client.DateOfBirth;
+				}
+				return dateofbirth;
+			}
 			set
 			{
 				dateofbirth = value;
@@ -805,7 +943,14 @@ namespace bank_application.ViewModel
 		}
 		public string Email
 		{
-			get { return email; }
+			get
+			{
+				if (client != null)
+				{
+					return client.Email;
+				}
+				return email;
+			}
 			set
 			{
 				email = value;
@@ -814,7 +959,14 @@ namespace bank_application.ViewModel
 		}
 		public string Phonenumber
 		{
-			get { return phonenumber; }
+			get
+			{
+				if (client != null)
+				{
+					return client.Phonenumber;
+				}
+				return phonenumber;
+			}
 			set
 			{
 				phonenumber = value;
@@ -841,7 +993,14 @@ namespace bank_application.ViewModel
 		}
 		public string PaspSeries
 		{
-			get { return paspseries; }
+			get
+			{
+				if (client != null)
+				{
+					return client.PassportSeries;
+				}
+				return paspseries;
+			}
 			set
 			{
 				paspseries = value;
@@ -850,7 +1009,14 @@ namespace bank_application.ViewModel
 		}
 		public string PaspNum
 		{
-			get { return paspnum; }
+			get
+			{
+				if (client != null)
+				{
+					return client.PassportNum.ToString();
+				}
+				return paspnum;
+			}
 			set
 			{
 				paspnum = value;

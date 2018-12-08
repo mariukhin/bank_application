@@ -1,11 +1,11 @@
-﻿<Window x:Class="bank_application.AddCard"
+﻿<Window x:Class="bank_application.UI.ChangeData"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:bank_application"
+        xmlns:local="clr-namespace:bank_application.UI"
         mc:Ignorable="d"
-        Title="AddCard" Height="224.778" Width="243.807" ResizeMode="NoResize">
+        Title="ChangeData" Height="139.678" Width="379.776">
 	<Window.Triggers>
 		<EventTrigger RoutedEvent="Window.Loaded">
 			<EventTrigger.Actions>
@@ -50,11 +50,9 @@
 		</Style>
 	</Window.Resources>
 	<Grid Background="#FFF3DEDE">
-		<Label Content="Card Name" HorizontalAlignment="Left" Margin="24,19,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29"/>
-		<TextBox Text="{Binding CardName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name ="tbcardName" HorizontalAlignment="Left" Height="18" Margin="117,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.813,0.514"/>
-		<Label Content="PIN" HorizontalAlignment="Left" Margin="50,53,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29" RenderTransformOrigin="1.17,0.455"/>
-		<TextBox Text="{Binding PIN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name ="tbPIN" HorizontalAlignment="Left" Height="18" Margin="117,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.813,0.514"/>
-		<Button Command="{Binding AddCardCommand}" Content="Add" MinWidth="50" MinHeight="20" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="92,119,86.6,35.2"/>
-		<CheckBox IsChecked="{Binding Checked}" x:Name ="checkBox1" Content="I agree with all agreenment" HorizontalAlignment="Left" FontFamily="Verdana" FontSize="12" Margin="24,99,0,0" VerticalAlignment="Top"/>
+		<Label Content="Put new data:" HorizontalAlignment="Left" Margin="10,27,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29"/>
+		<TextBox Text="{Binding ChangeData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name ="tbcardName" HorizontalAlignment="Left" Height="18" Margin="119,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="240" RenderTransformOrigin="0.813,0.514"/>
+		<Button Command="{Binding ChangeDataCommand}" Content="Add" MinWidth="50" MinHeight="20" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="155,57,159.6,24.4"/>
+
 	</Grid>
 </Window>

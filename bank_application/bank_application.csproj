@@ -78,11 +78,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Animation\WindowStyle.xaml.cs">
-      <DependentUpon>WindowStyle.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Command\AdminDeterminant.cs" />
     <Compile Include="Command\DBhelperClass.cs" />
+    <Compile Include="Command\GetPersonalData.xaml.cs">
+      <DependentUpon>GetPersonalData.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\AddCard.xaml.cs">
       <DependentUpon>AddCard.xaml</DependentUpon>
     </Compile>
@@ -106,6 +106,9 @@
     </Compile>
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\Credit.cs" />
+    <Compile Include="UI\ChangeData.xaml.cs">
+      <DependentUpon>ChangeData.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\CreditsPage.xaml.cs">
       <DependentUpon>CreditsPage.xaml</DependentUpon>
     </Compile>
@@ -136,7 +139,7 @@
     </Compile>
     <Compile Include="ViewModel\AdminViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
-    <Page Include="Animation\WindowStyle.xaml">
+    <Page Include="Command\GetPersonalData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Cashback.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\ChangeData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

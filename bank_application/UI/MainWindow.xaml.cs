@@ -39,7 +39,7 @@ namespace bank_application
 		}
 		private void btnClickPersonalData(object sender, RoutedEventArgs e)
 		{
-			Main.Content = new PersonalData();
+			Main.Content = new PersonalData(nuvm);
 		}
 		private void btnCloseClick(object sender, RoutedEventArgs e)
 		{

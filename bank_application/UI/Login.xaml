@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:bank_application"
         mc:Ignorable="d"
 		x:Name="LoginWindow"
-        Title="Login" Height="500" Width="500" Foreground="{x:Null}">
+        Title="Login" Height="500" Width="500" Foreground="{x:Null}"  ResizeMode="NoResize">
 	<Window.Triggers>
 		<EventTrigger RoutedEvent="Loaded" SourceName="LoginWindow">
 			<EventTrigger.Actions>

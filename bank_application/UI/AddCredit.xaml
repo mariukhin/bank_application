@@ -5,22 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bank_application"
         mc:Ignorable="d"
-        Title="AddCredit" Height="242.527" Width="267.683">
+        Title="AddCredit" Height="290.746" Width="267.683"  ResizeMode="NoResize">
+	<Window.Triggers>
+		<EventTrigger RoutedEvent="Window.Loaded">
+			<EventTrigger.Actions>
+				<BeginStoryboard>
+					<Storyboard>
+						<DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.3" To="1" Duration="0:0:0.15"/>
+					</Storyboard>
+				</BeginStoryboard>
+			</EventTrigger.Actions>
+		</EventTrigger>
+	</Window.Triggers>
 	<Window.Resources>
-		<Style TargetType="TextBlock">
-			<Setter Property="FontSize" Value="14" />
-		</Style>
-		<Style TargetType="Button">
-			<Setter Property="Width" Value="45" />
-			<Setter Property="Margin" Value="5" />
+		<Style TargetType="{x:Type Button}">
+			<Setter Property="Background" Value="#FF9D9D9D" />
+			<Setter Property="Foreground" Value="White" />
+			<Setter Property="FontSize" Value="16" />
+			<Setter Property="SnapsToDevicePixels" Value="True" />
+
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Button}">
+						<Border CornerRadius="4"  Background="{TemplateBinding Background}">
+							<Grid>
+								<ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+							</Grid>
+						</Border>
+
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Background" Value="#E59400" />
+								<Setter Property="Foreground" Value="White" />
+							</Trigger>
+
+							<Trigger Property="IsPressed" Value="True">
+								<Setter Property="Background" Value="OrangeRed" />
+								<Setter Property="Foreground" Value="White" />
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
 		</Style>
 	</Window.Resources>
+	
 	<Grid Margin="0,0,-0.4,1.4" Background="#FFF3DEDE">
 		<Label Content="Count" HorizontalAlignment="Left" Margin="41,24,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29"/>
 		<TextBox Text="{Binding NumberCr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name ="tbCount" HorizontalAlignment="Left" Height="18" Margin="121,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="113" RenderTransformOrigin="0.813,0.514"/>
 		<Label Content="Duration" HorizontalAlignment="Left" Margin="28,63,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29"/>
 		<TextBox Text="{Binding DurationCr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name ="tbDuration" HorizontalAlignment="Left" Height="18" Margin="121,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.813,0.514"/>
-		<Button Command="{Binding AddCreditCommand}" Content="Add" MinWidth="50" MinHeight="20" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="108,177,93,10.4" FontSize="16" Width="Auto" />
+		<Button Command="{Binding AddCreditCommand}" Content="Add" MinWidth="50" MinHeight="20" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="108,177,93,48.4" Width="Auto" />
 		<CheckBox IsChecked="{Binding Checked}" x:Name ="checkBox1" Content="I agree with all agreenments" HorizontalAlignment="Left" FontFamily="Verdana" FontSize="12" Margin="40,142,0,0" VerticalAlignment="Top"/>
 		<Label Content="month" HorizontalAlignment="Left" Margin="164,63,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" Height="27" Width="70"/>
 		<Label Content="Card" HorizontalAlignment="Left" Margin="41,102,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="27" Width="40" RenderTransformOrigin="-0.07,-0.081"/>

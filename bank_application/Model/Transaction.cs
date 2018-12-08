@@ -36,13 +36,18 @@ namespace bank_application
 		{
 			int senderMoney = cardSend.Money - sum;
 			int giveMoney = cardGive.Money + sum;
-			double cashback = sum * 0.05;
+			double cashback = sum * 0.005;
 			cardSend.UpdateCardMoney(cardSend, senderMoney);
 			cardGive.UpdateCardMoney(cardGive, giveMoney);
 
-			Client client = new Client(0, "user", "user", "23.02.1003", "VV", 2349959, "dfddd", "dd@kkd.xc", "243320030", "dfdfsd", "dfdf", 0, 0);
-			client = client.GetClientById(cardSend.ClientId);
-			client.UpdateCashback(client ,cashback);
+			Client clientSend = new Client(0, "user", "user", "23.02.1003", "VV", 2349959, "dfddd", "dd@kkd.xc", "243320030", "dfdfsd", "dfdf", 0, 0);
+			Client clientGive = new Client(0, "user", "user", "23.02.1003", "VV", 2349959, "dfddd", "dd@kkd.xc", "243320030", "dfdfsd", "dfdf", 0, 0);
+			clientSend = clientSend.GetClientById(cardSend.ClientId);
+			clientGive = clientGive.GetClientById(cardGive.ClientId);
+			if (clientSend.Id != clientGive.Id)
+			{
+				clientSend.UpdateCashback(clientSend, cashback);
+			}
 		}
 		public bool CheckPayingCapacity(int sendmoney, int cardmoney)
 		{

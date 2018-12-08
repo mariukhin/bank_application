@@ -6,7 +6,51 @@
       xmlns:local="clr-namespace:bank_application"
       mc:Ignorable="d"
       Title="Cards" Width="480" Height="400">
+	<Page.Resources>
+		<Style TargetType="{x:Type Button}">
+			<Setter Property="Background" Value="#FFE5E5E5" />
+			<Setter Property="Foreground" Value="#FF483939" />
+			<Setter Property="FontSize" Value="15" />
+			<Setter Property="SnapsToDevicePixels" Value="True" />
 
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Button}">
+						<Border CornerRadius="4"  Background="{TemplateBinding Background}">
+							<Grid>
+								<ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+							</Grid>
+						</Border>
+
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Background" Value="#E59400" />
+								<Setter Property="Foreground" Value="White" />
+							</Trigger>
+
+							<Trigger Property="IsPressed" Value="True">
+								<Setter Property="Background" Value="OrangeRed" />
+								<Setter Property="Foreground" Value="White" />
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style TargetType="{x:Type ListBox}">
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Trigger.EnterActions>
+						<BeginStoryboard>
+							<Storyboard>
+								<DoubleAnimation AutoReverse="True" RepeatBehavior="0:1:8"  Duration="0:0:2" From="1" To="0.2" Storyboard.TargetProperty="Opacity" />
+							</Storyboard>
+						</BeginStoryboard>
+					</Trigger.EnterActions>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+	</Page.Resources>
 	<Grid>
 		<Grid.Resources>
 			<Style x:Key="ItemContainer" TargetType="ListBoxItem">
@@ -21,10 +65,6 @@
 								<Trigger Property="IsSelected" Value="true">
 									<Setter Property="BorderBrush" TargetName="ItemBorder" Value="DarkOrange"/>
 								</Trigger>
-								<!--<Trigger Property="IsMouseOver" Value="true">
-									<Setter Property="Background" TargetName="ListBoxItem" Value="Blue"/>
-								</Trigger>-->
-
 							</ControlTemplate.Triggers>
 						</ControlTemplate>
 					</Setter.Value>
@@ -33,10 +73,10 @@
 
 		</Grid.Resources>
 
-		<Button Command="{Binding OpenAddCardCommand}" Content="Add new card" MinWidth="105" MinHeight="50" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,46,320,302" FontSize="16" />
-		<Button   Command="{Binding OpenTransferCommand}" Content="Transfer" MinWidth="105" MinHeight="50" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,156,320,191" FontSize="16" />
-		<Button Content="Top up mobile" MinWidth="105" MinHeight="50" Click="btnClickTopUp" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,268,320,79" FontSize="16" />
-		<ListBox ItemsSource="{Binding Cards}" SelectedItem="{Binding SelectedCard}"
+		<Button Command="{Binding OpenAddCardCommand}" Content="Add new card" MinWidth="105" MinHeight="50" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,23,320,325" />
+		<Button Command="{Binding OpenTransferCommand}" Content="Transfer" MinWidth="105" MinHeight="50" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,100,320,247"/>
+		<Button Content="Top up mobile" MinWidth="105" MinHeight="50" Click="btnClickTopUp" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,268,320,79"/>
+		<ListBox ItemsSource="{Binding Cards}" SelectedItem="{Binding SelectedCard}" x:Name="listCards"
 				  ItemContainerStyle="{StaticResource ItemContainer}" HorizontalAlignment="Left" Height="331" Margin="188,23,0,0" VerticalAlignment="Top" Width="282">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
@@ -57,5 +97,6 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
+		<Button Command="{Binding RemoveCardCommand}" CommandParameter="{Binding SelectedCard}" Content="Remove card" MinWidth="105" MinHeight="50" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,184,320,163"/>
 	</Grid>
 </Page>

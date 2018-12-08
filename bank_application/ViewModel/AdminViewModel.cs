@@ -31,12 +31,7 @@ namespace bank_application.ViewModel
 				return rejectrequestCommand ??
 					(rejectrequestCommand = new RelayCommand(obj =>
 					{
-						try
-						{
-							Admin.DeleteSelectedItem(SelectedRequest.Description, SelectedRequest.SmthId, SelectedRequest.Id);
-						}
-						catch (Exception ex)
-						{ }
+						Admin.DeleteSelectedItem(SelectedRequest.Description, SelectedRequest.SmthId, SelectedRequest.Id);
 						Requests.Remove(SelectedRequest);
 					}));
 			}
@@ -49,12 +44,7 @@ namespace bank_application.ViewModel
 				return confirmrequestCommand ??
 					(confirmrequestCommand = new RelayCommand(obj =>
 					{
-						try
-						{
-							Admin.ParseDescription(SelectedRequest.Description, SelectedRequest.SmthId, SelectedRequest.Id);
-						}
-						catch(Exception ex)
-						{}
+						Admin.ParseDescription(SelectedRequest.Description, SelectedRequest.SmthId, SelectedRequest.Id);
 						Requests.Remove(SelectedRequest);
 					}));
 			}

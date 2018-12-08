@@ -14,6 +14,7 @@ namespace bank_application
 		private string type;
 		private int clientid;
 		private bool isconfirmdep;
+		private Deposit selDeposit;
 
 
 		public Deposit(int Id,int Duration, int Number,string CardNumber, string Type, int ClientId, bool IsConfirmDep)
@@ -75,7 +76,16 @@ namespace bank_application
 				return null;
 			}
 		}
-
+		public void DeleteSelectedDeposit(int deposit_id)
+		{
+			OpenConnection();
+			m_sqlCmd.CommandText = @"DELETE FROM deposits WHERE deposit_id = @smthid";
+			m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = deposit_id });
+			m_sqlCmd.ExecuteNonQuery();
+			SQLiteDataReader reader;
+			reader = m_sqlCmd.ExecuteReader();
+			CloseConnection();
+		}
 		public int Duration
 		{
 			get { return duration; }
@@ -128,6 +138,15 @@ namespace bank_application
 			{
 				isconfirmdep = value;
 				OnPropertyChanged("IsConfirmDep");
+			}
+		}
+		public Deposit SelectedDeposit
+		{
+			get { return selDeposit; }
+			set
+			{
+				selDeposit = value;
+				OnPropertyChanged("SelectedDeposit");
 			}
 		}
 		public event PropertyChangedEventHandler PropertyChanged;

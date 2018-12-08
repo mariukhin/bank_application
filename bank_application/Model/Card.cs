@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Data.SQLite;
-using System.Data;
 using bank_application.Command;
 
 namespace bank_application
@@ -43,7 +40,7 @@ namespace bank_application
 
 		public void AddNewCard(Card card)
 		{
-			DateTime dt = new DateTime();
+			//DateTime dt = new DateTime();
 			card.CardNumber = GenerateCardNumber();
 			card.CVcode = GenerateCVcode();
 			//card.Term = GenerateTerm(dt);
@@ -54,7 +51,16 @@ namespace bank_application
 			m_sqlCmd.ExecuteNonQuery();
 			CloseConnection();
 		}
-
+		public void DeleteSelectedCard(int card_id)
+		{
+			OpenConnection();
+			m_sqlCmd.CommandText = @"DELETE FROM cards WHERE card_id = @smthid";
+			m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = card_id });
+			m_sqlCmd.ExecuteNonQuery();
+			SQLiteDataReader reader;
+			reader = m_sqlCmd.ExecuteReader();
+			CloseConnection();
+		}
 		public Card GetCurrentCard(Card card)
 		{
 			OpenConnection();

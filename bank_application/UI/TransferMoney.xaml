@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bank_application.UI"
         mc:Ignorable="d"
-        Title="TransferMoney" Height="244.995" Width="357.78">
+        Title="TransferMoney" Height="260.531" Width="357.78" ResizeMode="NoResize">
 	<Grid Background="#FFF3DEDE">
 		<Label Content="Your card" HorizontalAlignment="Left" Margin="51,26,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29"/>
 		<TextBox Text="{Binding TransferCardGive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="18" Margin="159,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173" RenderTransformOrigin="0.813,0.514"/>
@@ -28,7 +28,7 @@
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
-		<Button Command="{Binding TransferMoneyCommand}" Content="Transfer" MinWidth="50" MinHeight="20" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="131,170,131.2,19.2" FontSize="16" />
+		<Button Command="{Binding TransferMoneyCommand}" Content="Transfer" MinWidth="50" MinHeight="20" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="131,174,131.2,25.2" FontSize="16" />
 		<CheckBox IsChecked="{Binding Checked}" x:Name ="checkBox1" Content="I agree with all agreenment" HorizontalAlignment="Left" FontFamily="Verdana" FontSize="12" Margin="88,138,0,0" VerticalAlignment="Top"/>
 		<Label Content="Count money" HorizontalAlignment="Left" Margin="35,94,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29" RenderTransformOrigin="1.17,0.455"/>
 		<TextBox Text="{Binding TransferMoney, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="18" Margin="159,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.813,0.514"/>

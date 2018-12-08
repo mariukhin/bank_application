@@ -112,6 +112,18 @@ namespace bank_application
 			reader.Close();
 			CloseConnection();
 		}
+		public void UpdateLogin(string data, Client client)
+		{
+			OpenConnection();
+			m_sqlCmd.CommandText = @"UPDATE clients SET login = @login WHERE client_id = @clientid";
+			m_sqlCmd.Parameters.Add(new SQLiteParameter("@login") { Value = data });
+			m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
+			m_sqlCmd.ExecuteNonQuery();
+			SQLiteDataReader reader;
+			reader = m_sqlCmd.ExecuteReader();
+			reader.Close();
+			CloseConnection();
+		}
 		public ObservableCollection<Card> CreateCards(int client_id)
 		{
 			OpenConnection();
@@ -164,7 +176,90 @@ namespace bank_application
 			CloseConnection();
 			return Deposits;
 		}
+		public void DeleteSelectedItem(int smth_id ,string descr)
+		{
+			OpenConnection();
+			if (descr.Contains("deposit"))
+			{
+				m_sqlCmd.CommandText = @"DELETE FROM deposits WHERE deposit_id = @smthid";
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smth_id });
+				m_sqlCmd.ExecuteNonQuery();
+				SQLiteDataReader reader;
+				reader = m_sqlCmd.ExecuteReader();
+				reader.Close();
+			}
+			else if (descr.Contains("card"))
+			{
+				m_sqlCmd.CommandText = @"DELETE FROM cards WHERE card_id = @smthid";
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smth_id });
+				m_sqlCmd.ExecuteNonQuery();
+				SQLiteDataReader reader;
+				reader = m_sqlCmd.ExecuteReader();
+				reader.Close();
+			}
+			CloseConnection();
+		}
+		public void UpdateInfo(string type, string data, Client client)
+		{
+			OpenConnection();
+			if (type.Contains("first_name"))
+			{
+				client.Firstname = data;
+				m_sqlCmd.CommandText = @"UPDATE clients SET first_name = @param WHERE client_id = @clientid";
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value =  client.Id});
+				m_sqlCmd.ExecuteNonQuery();
+				SQLiteDataReader reader;
+				reader = m_sqlCmd.ExecuteReader();
+				reader.Close();
+			}
+			else if (type.Contains("last_name"))
+			{
+				client.Surname = data;
+				m_sqlCmd.CommandText = @"UPDATE clients SET last_name = @param WHERE client_id = @clientid";
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
+				m_sqlCmd.ExecuteNonQuery();
+				SQLiteDataReader reader;
+				reader = m_sqlCmd.ExecuteReader();
+				reader.Close();
+			}
+			else if (type.Contains("password"))
+			{
+				client.Password = data;
+				m_sqlCmd.CommandText = @"UPDATE clients SET password = @param WHERE client_id = @clientid";
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
+				m_sqlCmd.ExecuteNonQuery();
+				SQLiteDataReader reader;
+				reader = m_sqlCmd.ExecuteReader();
+				reader.Close();
+			}
+			else if (type.Contains("e-mail"))
+			{
+				client.Email = data;
+				m_sqlCmd.CommandText = @"UPDATE clients SET email = @param WHERE client_id = @clientid";
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
+				m_sqlCmd.ExecuteNonQuery();
+				SQLiteDataReader reader;
+				reader = m_sqlCmd.ExecuteReader();
+				reader.Close();
+			}
+			else if (type.Contains("phone"))
+			{
+				client.Phonenumber = data;
+				m_sqlCmd.CommandText = @"UPDATE clients SET phone = @param WHERE client_id = @clientid";
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
+				m_sqlCmd.ExecuteNonQuery();
+				SQLiteDataReader reader;
+				reader = m_sqlCmd.ExecuteReader();
+				reader.Close();
+			}
 
+			CloseConnection();
+		}
 		public string Login
 		{
 			get { return login; }
@@ -220,14 +315,9 @@ namespace bank_application
 			}
 		}
 
-		//public static void getPersonalData()
-		//{
-		//	return
-		//}
-
 		public override string ToString()
 		{
-			return Id.ToString() + '|' + Login + '|' + Surname + '|' + PassportNum + '|' + Firstname;
+			return Firstname + '|' + Surname + '|' + Password + '|' + Phonenumber + '|' + Email;
 		}
 	}
 }

@@ -14,10 +14,6 @@ namespace bank_application
             InitializeComponent();
 			DataContext = uvm;
 		}
-		private void btnClickCancelDeposit(object sender, RoutedEventArgs e)
-		{
-			//проверка возможности удаления, если да, то удалить, если нет, то оставить
-		}
 		private void btnClickProlongDeposit(object sender, RoutedEventArgs e)
 		{
 			//проверка возможности продления депозита, если да, то продить, если нет, то ничего не делать

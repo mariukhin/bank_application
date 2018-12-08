@@ -5,14 +5,79 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bank_application"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="531.79" Width="838.191">
+		x:Name="AdmWindow"
+        Title="AdminWindow" Height="586.266" Width="839.488"  ResizeMode="NoResize">
+	<Window.Triggers>
+		<EventTrigger RoutedEvent="Loaded" SourceName="AdmWindow">
+			<EventTrigger.Actions>
+				<BeginStoryboard>
+					<Storyboard>
+						<DoubleAnimation Storyboard.TargetName="AdmWindow" Storyboard.TargetProperty="Opacity" From="0.3" To="1" Duration="0:0:1"/>
+					</Storyboard>
+				</BeginStoryboard>
+			</EventTrigger.Actions>
+		</EventTrigger>
+	</Window.Triggers>
 	<Window.Resources>
 		<Style TargetType="TextBlock">
 			<Setter Property="FontSize" Value="14" />
 		</Style>
-		<Style TargetType="Button">
-			<Setter Property="Width" Value="40" />
+		<Style TargetType="{x:Type Button}">
+			<Setter Property="Background" Value="#FFE5E5E5" />
+			<Setter Property="Foreground" Value="#FF483939" />
+			<Setter Property="FontSize" Value="14" />
+			<Setter Property="Height" Value="35" />
+			<Setter Property="Width" Value="108" />
 			<Setter Property="Margin" Value="5" />
+			<Setter Property="SnapsToDevicePixels" Value="True" />
+
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Button}">
+						<Border CornerRadius="4"  Background="{TemplateBinding Background}">
+							<Grid>
+								<ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+							</Grid>
+						</Border>
+
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Background" Value="#E59400" />
+								<Setter Property="Foreground" Value="White" />
+							</Trigger>
+
+							<Trigger Property="IsPressed" Value="True">
+								<Setter Property="Background" Value="OrangeRed" />
+								<Setter Property="Foreground" Value="White" />
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Trigger.EnterActions>
+						<BeginStoryboard>
+							<Storyboard>
+								<DoubleAnimation Duration="0:0:0.550" To="50" 
+                                                            Storyboard.TargetProperty="Height" />
+								<DoubleAnimation Duration="0:0:0.550" To="90" 
+                                                            Storyboard.TargetProperty="Width" />
+							</Storyboard>
+						</BeginStoryboard>
+					</Trigger.EnterActions>
+					<Trigger.ExitActions>
+						<BeginStoryboard>
+							<Storyboard>
+								<DoubleAnimation Duration="0:0:0.550" To="35" 
+                                                            Storyboard.TargetProperty="Height" />
+								<DoubleAnimation Duration="0:0:0.550" To="108" 
+                                                            Storyboard.TargetProperty="Width" />
+							</Storyboard>
+						</BeginStoryboard>
+					</Trigger.ExitActions>
+				</Trigger>
+			</Style.Triggers>
 		</Style>
 	</Window.Resources>
 	<Grid>
@@ -20,11 +85,6 @@
 			<ColumnDefinition Width="239*"></ColumnDefinition>
 			<ColumnDefinition Width="585*"></ColumnDefinition>
 		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
 		<Grid.Resources>
 			<Style x:Key="ItemContainer" TargetType="{x:Type ListBoxItem}">
 				<Setter Property="Template">
@@ -51,7 +111,7 @@
 		<ListBox ItemsSource="{Binding Requests}"
                  SelectedItem="{Binding SelectedRequest}"
 				  ItemContainerStyle="{StaticResource ItemContainer}"
-			HorizontalAlignment="Left" Height="403" Margin="0.8,34,0,0" VerticalAlignment="Top" Width="573" Grid.Column="1">
+			HorizontalAlignment="Left" Height="403" Margin="0.4,34,0,0" VerticalAlignment="Top" Width="573" Grid.Column="1">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Margin="5" Orientation="Horizontal">
@@ -76,9 +136,9 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
-		<Button Command="{Binding ConfirmRequestCommand}" Margin="70,127,63.6,319.4" Width="108" HorizontalAlignment="Center" Background="#FFE5E5E5" FontFamily="Verdana" FontSize="14" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Confirm"/>
-		<Button Command="{Binding RejectRequestCommand}" CommandParameter="{Binding SelectedRequest}" Margin="70,303,63.6,141.6" Width="108" HorizontalAlignment="Center" Background="#FFE5E5E5" FontFamily="Verdana" FontSize="14" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Reject"/>
-		<Button Margin="496.4,459,17,9.6" Width="77" HorizontalAlignment="Center" Click="btnClose_Click" Background="#FFE5E5E5" FontFamily="Verdana" FontSize="14" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Close" Grid.Column="1"/>
+		<Button Command="{Binding ConfirmRequestCommand}" Margin="70,127,63.6,319.4"  HorizontalAlignment="Center"  FontFamily="Verdana" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Confirm"/>
+		<Button Command="{Binding RejectRequestCommand}" CommandParameter="{Binding SelectedRequest}" Margin="70,303,63.6,141.6"  HorizontalAlignment="Center" FontFamily="Verdana" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Reject"/>
+		<Button Margin="465,463,15,39.6"  HorizontalAlignment="Center" Click="btnClose_Click" FontFamily="Verdana"  BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Close" Grid.Column="1"/>
 		<Label Content="{Binding AdminName}" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="222" Foreground="DarkOrange" FontStyle="Italic" FontFamily="Verdana" FontSize="18"/>
 		<Grid.Background>
 			<ImageBrush ImageSource="main.jpg"/>
