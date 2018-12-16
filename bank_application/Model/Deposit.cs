@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Data.SQLite;
 using bank_application.Command;
+using System;
 
 namespace bank_application
 {
@@ -15,9 +16,9 @@ namespace bank_application
 		private int clientid;
 		private bool isconfirmdep;
 		private Deposit selDeposit;
+		private DateTime datedeposit;
 
-
-		public Deposit(int Id,int Duration, int Number,string CardNumber, string Type, int ClientId, bool IsConfirmDep)
+		public Deposit(int Id,int Duration, int Number,string CardNumber, string Type, int ClientId, bool IsConfirmDep, DateTime DateDeposit)
 		{
 			this.Id = Id;
 			this.Duration = Duration;
@@ -26,16 +27,16 @@ namespace bank_application
 			this.Type = Type;
 			this.ClientId = ClientId;
 			this.IsConfirmDep = IsConfirmDep;
-
+			this.DateDeposit = DateDeposit;
 		}
 		public bool AddNewDeposit(Deposit deposit , Card card)
 		{
 			if (CheckPayingCapacity(deposit.Number, card.Money))
 			{
 				OpenConnection();
-				m_sqlCmd.CommandText = "INSERT INTO deposits ('duration', 'number','cardnumber','type', 'client_id') values ('" +
+				m_sqlCmd.CommandText = "INSERT INTO deposits ('duration', 'number','cardnumber','type', 'client_id', 'date') values ('" +
 							deposit.Duration + "' , '" + deposit.Number + "' , '" + deposit.CardNumber + "' , '" + deposit.Type +
-							"' , '" + deposit.ClientId + "')";
+							"' , '" + deposit.ClientId + "' , '" + deposit.DateDeposit + "')";
 				m_sqlCmd.ExecuteNonQuery();
 				CloseConnection();
 				return true;
@@ -66,7 +67,7 @@ namespace bank_application
 			if (reader.Read())
 			{
 				deposit = new Deposit(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2),reader.GetString(3),
-					reader.GetString(4), reader.GetInt32(5), CheckConfirm(reader.GetInt32(6)));
+					reader.GetString(4), reader.GetInt32(5), CheckConfirm(reader.GetInt32(6)), Convert.ToDateTime(reader.GetString(7)));
 				reader.Close();
 				CloseConnection();
 				return deposit;
@@ -147,6 +148,15 @@ namespace bank_application
 			{
 				selDeposit = value;
 				OnPropertyChanged("SelectedDeposit");
+			}
+		}
+		public DateTime DateDeposit
+		{
+			get { return datedeposit; }
+			set
+			{
+				datedeposit = value;
+				OnPropertyChanged("DateDeposit");
 			}
 		}
 		public event PropertyChangedEventHandler PropertyChanged;

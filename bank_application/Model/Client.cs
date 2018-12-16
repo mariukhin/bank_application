@@ -1,5 +1,8 @@
 ﻿using System.Data.SQLite;
 using System.Collections.ObjectModel;
+using System;
+using bank_application.CountService;
+
 
 namespace bank_application
 {
@@ -11,10 +14,10 @@ namespace bank_application
 
 		private string login;
 		private double cashback;
-		private int moneybox;
+		private double moneybox;
 
 		public Client(int Id,string Firstname, string Surname, string DateOfBirth, string PassportSeries, int PassportNum,
-			string Adress, string Email, string Phonenumber, string Login, string Password, double Cashback, int Moneybox) : base(Id, Firstname, Surname, DateOfBirth, PassportSeries, PassportNum, Adress, Email, Phonenumber, Password)
+			string Adress, string Email, string Phonenumber, string Login, string Password, double Cashback, double Moneybox) : base(Id, Firstname, Surname, DateOfBirth, PassportSeries, PassportNum, Adress, Email, Phonenumber, Password)
 		{
 			this.Id = Id;
 			this.Firstname = Firstname;
@@ -101,10 +104,39 @@ namespace bank_application
 		}
 		public void UpdateCashback(Client client, double cashback)
 		{
-			double newCash = client.Cashback + cashback;
+			double newCash;
+			if (cashback == 0.0)
+			{
+				newCash = cashback;
+			}
+			else
+			{
+				newCash = client.Cashback + cashback;
+			}
 			OpenConnection();
 			m_sqlCmd.CommandText = @"UPDATE clients SET cashback = @cashback WHERE client_id = @clientid";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@cashback") { Value = cashback });
+			m_sqlCmd.Parameters.Add(new SQLiteParameter("@cashback") { Value = newCash });
+			m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
+			m_sqlCmd.ExecuteNonQuery();
+			SQLiteDataReader reader;
+			reader = m_sqlCmd.ExecuteReader();
+			reader.Close();
+			CloseConnection();
+		}
+		public void UpdateMoneyBox(Client client, double moneybox)
+		{
+			double newCash;
+			if (moneybox == 0.0)
+			{
+				newCash = moneybox;
+			}
+			else
+			{
+				newCash = client.Moneybox + moneybox;
+			}
+			OpenConnection();
+			m_sqlCmd.CommandText = @"UPDATE clients SET moneybox = @moneybox WHERE client_id = @clientid";
+			m_sqlCmd.Parameters.Add(new SQLiteParameter("@moneybox") { Value = newCash });
 			m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
 			m_sqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
@@ -153,10 +185,26 @@ namespace bank_application
 			while (reader.Read())
 			{
 				Credit credit = new Credit(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2),
-					reader.GetString(3), reader.GetInt32(4), CheckConfirm(reader.GetInt32(5)));
+					reader.GetString(3), reader.GetInt32(4), CheckConfirm(reader.GetInt32(5)), Convert.ToDateTime(reader.GetString(6)));
 				Credits.Add(credit);
 			}
 			CloseConnection();
+
+			CountServiceClient countClient = new CountServiceClient();
+			foreach (Credit credit in Credits)
+			{
+				int offence = countClient.CalcCredit(credit.Duration, credit.Number, credit.DateCredit);
+				if (offence != 0)
+				{
+					Card card = new Card(1, credit.CardNumber, "dffdsfwef", 2355, 544, "03.11.2023", 0, 2, true);
+					card = card.GetCurrentCard(card);
+					int newCardMoney = card.Money - offence;
+					card.UpdateCardMoney(card, newCardMoney);
+					Credits.Remove(credit);
+					DeleteSelectedItem(credit.Id, "credit");
+				}
+			}
+			countClient.Close();
 			return Credits;
 		}
 		public ObservableCollection<Deposit> CreateDeposits(int client_id)
@@ -170,16 +218,38 @@ namespace bank_application
 			while (reader.Read())
 			{
 				Deposit deposit = new Deposit(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetString(3),
-					reader.GetString(4), reader.GetInt32(5), CheckConfirm(reader.GetInt32(6)));
+					reader.GetString(4), reader.GetInt32(5), CheckConfirm(reader.GetInt32(6)), Convert.ToDateTime(reader.GetString(7)));
 				Deposits.Add(deposit);
 			}
 			CloseConnection();
+			CountServiceClient depositClient = new CountServiceClient();
+			foreach (Deposit deposit in Deposits)
+			{
+				double pay = depositClient.CalcDeposit(deposit.Duration, deposit.Number, deposit.DateDeposit);
+				if (pay != 0)
+				{
+					Card card = new Card(1, deposit.CardNumber, "dffdsfwef", 2355, 544, "03.11.2023", 0, 2, true);
+					card = card.GetCurrentCard(card);
+					int newCardMoney = card.Money + (int)pay;
+					card.UpdateCardMoney(card, newCardMoney);
+				}
+			}
+			depositClient.Close();
 			return Deposits;
 		}
 		public void DeleteSelectedItem(int smth_id ,string descr)
 		{
 			OpenConnection();
-			if (descr.Contains("deposit"))
+			if (descr.Contains("credit"))
+			{
+				m_sqlCmd.CommandText = @"DELETE FROM credits WHERE credit_id = @smthid";
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smth_id });
+				m_sqlCmd.ExecuteNonQuery();
+				SQLiteDataReader reader;
+				reader = m_sqlCmd.ExecuteReader();
+				reader.Close();
+			}
+			else if (descr.Contains("deposit"))
 			{
 				m_sqlCmd.CommandText = @"DELETE FROM deposits WHERE deposit_id = @smthid";
 				m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smth_id });
@@ -278,7 +348,7 @@ namespace bank_application
 				OnPropertyChanged("Cashback");
 			}
 		}
-		public int Moneybox
+		public double Moneybox
 		{
 			get { return moneybox; }
 			set

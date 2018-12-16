@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bank_application"
         mc:Ignorable="d"
-        Title="AddCard" Height="224.778" Width="243.807" ResizeMode="NoResize">
+        Title="AddCard" Height="224.778" Width="243.807" ResizeMode="NoResize" Icon="/bank_application;component/img/bank_78916.png" >
 	<Window.Triggers>
 		<EventTrigger RoutedEvent="Window.Loaded">
 			<EventTrigger.Actions>

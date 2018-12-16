@@ -35,7 +35,7 @@ namespace bank_application
 		}
 		private void btnClickMoneybox(object sender, RoutedEventArgs e)
 		{
-			Main.Content = new Moneybox();
+			Main.Content = new Moneybox(nuvm);
 		}
 		private void btnClickPersonalData(object sender, RoutedEventArgs e)
 		{

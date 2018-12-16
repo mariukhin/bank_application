@@ -12,6 +12,11 @@
 			<Setter Property="Foreground" Value="#FF483939" />
 			<Setter Property="FontSize" Value="15" />
 			<Setter Property="SnapsToDevicePixels" Value="True" />
+			<Setter Property="RenderTransform">
+				<Setter.Value>
+					<ScaleTransform CenterY="120" CenterX="30" ScaleY="1" />
+				</Setter.Value>
+			</Setter>
 
 			<Setter Property="Template">
 				<Setter.Value>
@@ -36,6 +41,24 @@
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Trigger.EnterActions>
+						<BeginStoryboard>
+							<Storyboard>
+								<DoubleAnimation From="1" To="0.8" RepeatBehavior="Forever" AutoReverse="True" Duration="00:00:00.8" Storyboard.TargetProperty="RenderTransform.ScaleY" />
+							</Storyboard>
+						</BeginStoryboard>
+					</Trigger.EnterActions>
+					<Trigger.ExitActions>
+						<BeginStoryboard>
+							<Storyboard>
+								<DoubleAnimation To="1" Duration="00:00:00.6" Storyboard.TargetProperty="RenderTransform.ScaleY" />
+							</Storyboard>
+						</BeginStoryboard>
+					</Trigger.ExitActions>
+				</Trigger>
+			</Style.Triggers>
 		</Style>
 		<Style TargetType="{x:Type ListBox}">
 			<Style.Triggers>
@@ -75,7 +98,7 @@
 
 		<Button Command="{Binding OpenAddCardCommand}" Content="Add new card" MinWidth="105" MinHeight="50" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,23,320,325" />
 		<Button Command="{Binding OpenTransferCommand}" Content="Transfer" MinWidth="105" MinHeight="50" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,100,320,247"/>
-		<Button Content="Top up mobile" MinWidth="105" MinHeight="50" Click="btnClickTopUp" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,268,320,79"/>
+		<Button Command="{Binding OpenTopUpMobileCommand}" Content="Top up mobile" MinWidth="105" MinHeight="50" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="15,268,320,79"/>
 		<ListBox ItemsSource="{Binding Cards}" SelectedItem="{Binding SelectedCard}" x:Name="listCards"
 				  ItemContainerStyle="{StaticResource ItemContainer}" HorizontalAlignment="Left" Height="331" Margin="188,23,0,0" VerticalAlignment="Top" Width="282">
 			<ListBox.ItemTemplate>

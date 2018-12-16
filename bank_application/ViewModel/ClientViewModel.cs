@@ -41,7 +41,7 @@ namespace bank_application.ViewModel
 		private string numberCr;
 		private Card cardnumbercr;
 		private bool isconfirmcr;
-
+		private DateTime datecredit;
 
 		/// <summary>
 		/// Deposit
@@ -55,13 +55,14 @@ namespace bank_application.ViewModel
 		private bool isconfirmdep;
 		private bool checkedftype;
 		private bool checkedstype;
-
+		private DateTime datedeposit;
 
 		/// <summary>
 		/// Card
 		/// </summary>
 		private Card card;
 		private Card selCard;
+		private Card topupmobilecard;
 		private string cardnumber;
 		private string cardname;
 		private string pin;
@@ -85,6 +86,11 @@ namespace bank_application.ViewModel
 		private Card transfercashbackcard;
 
 		/// <summary>
+		/// MoneyBox
+		/// </summary>
+		private Card transfermoneyboxcard;
+
+		/// <summary>
 		/// PersonalData
 		/// </summary>
 		private string ChangeDataType;
@@ -96,6 +102,54 @@ namespace bank_application.ViewModel
 			this.Login = Login;
 			this.Password = Password;
 		}
+
+		private RelayCommand transferMoneyBoxCommand;
+		public RelayCommand TransferMoneyBoxCommand
+		{
+			get
+			{
+				return transferMoneyBoxCommand ??
+					(transferMoneyBoxCommand = new RelayCommand(obj =>
+					{
+						if (Checked == true)
+						{
+							if (TransferMoneyBoxCard != null)
+							{
+								int newMoney = TransferMoneyBoxCard.Money + (int)Client.Moneybox;
+								TransferMoneyBoxCard.UpdateCardMoney(TransferMoneyBoxCard, newMoney);
+								Client.UpdateMoneyBox(Client, 0.0);
+								Cards.Clear();
+								MoneyBox = 0;
+								Cards = Client.CreateCards(Client.Id);
+								Application.Current.Windows[2].Close();
+							}
+							else
+							{
+								MessageBox.Show("Full all fields!");
+							}
+						}
+						else
+						{
+							MessageBox.Show("You have to agree with all agreenments");
+						}
+					}));
+			}
+		}
+		private RelayCommand openTransferMoneyBoxCommand;
+		public RelayCommand OpenTransferMoneyBoxCommand
+		{
+			get
+			{
+				return openTransferMoneyBoxCommand ??
+					(openTransferMoneyBoxCommand = new RelayCommand(obj =>
+					{
+						TransferMoneyBox transferMoneyBox = new TransferMoneyBox(this);
+						transferMoneyBox.Show();
+					}));
+			}
+		}
+
+
 		private RelayCommand changeDataCommand;
 		public RelayCommand ChangeDataCommand
 		{
@@ -222,6 +276,57 @@ namespace bank_application.ViewModel
 					}));
 			}
 		}
+		private RelayCommand topUpMobileCommand;
+		public RelayCommand TopUpMobileCommand
+		{
+			get
+			{
+				return topUpMobileCommand ??
+					(topUpMobileCommand = new RelayCommand(obj =>
+					{
+						if (Checked == true)
+						{
+							if (TopUpMobileCard != null && TransferMoney != null)
+							{
+								int trmoney = Convert.ToInt32(TransferMoney);
+								Transaction Transaction = new Transaction(1, TransferCardSend.CardNumber, null, trmoney);
+								if (Transaction.CheckPayingCapacity(trmoney, TransferCardSend.Money))
+								{
+									Transaction.TopUpMobile(TransferCardSend, trmoney);
+									Cards.Clear();
+									Cards = Client.CreateCards(Client.Id);
+									Application.Current.Windows[2].Close();
+								}
+								else
+								{
+									MessageBox.Show("You don't have enough money for this operation!");
+								}
+							}
+							else
+							{
+								MessageBox.Show("Full all fields!");
+							}
+						}
+						else
+						{
+							MessageBox.Show("You have to agree with all agreenments");
+						}
+					}));
+			}
+		}
+		private RelayCommand openTopUpMobileCommand;
+		public RelayCommand OpenTopUpMobileCommand
+		{
+			get
+			{
+				return openTopUpMobileCommand ??
+					(openTopUpMobileCommand = new RelayCommand(obj =>
+					{
+						TopUpMobile transferMoney = new TopUpMobile(this);
+						transferMoney.Show();
+					}));
+			}
+		}
 		private RelayCommand transferMoneyCommand;
 		public RelayCommand TransferMoneyCommand
 		{
@@ -235,7 +340,7 @@ namespace bank_application.ViewModel
 							if (TransferCardGive != null && TransferCardSend != null && TransferMoney != null)
 							{
 								int trmoney = Convert.ToInt32(TransferMoney);
-								Transaction = new Transaction(1 ,TransferCardSend.CardNumber, TransferCardGive, trmoney);
+								Transaction = new Transaction(1, TransferCardSend.CardNumber, TransferCardGive, trmoney);
 								if (Transaction.CheckPayingCapacity(trmoney, TransferCardSend.Money))
 								{
 									if (Transaction.CheckGiveCard(TransferCardGive) != null)
@@ -356,7 +461,7 @@ namespace bank_application.ViewModel
 							{
 								int number = Convert.ToInt32(NumberDep);
 								int dur = Convert.ToInt32(DurationDep);
-								Deposit = new Deposit(1, dur, number,CardNumberDep.CardNumber,TypeDep, Client.Id, IsConfirmDep);
+								Deposit = new Deposit(1, dur, number,CardNumberDep.CardNumber,TypeDep, Client.Id, IsConfirmDep, DateTime.Today);
 								if (Deposit.GetCurrentDeposit(Deposit) == null)
 								{
 									if (Deposit.AddNewDeposit(Deposit, CardNumberDep))
@@ -431,7 +536,7 @@ namespace bank_application.ViewModel
 							{
 								int number = Convert.ToInt32(NumberCr);
 								int dur = Convert.ToInt32(DurationCr);
-								Credit = new Credit(1, dur, number, CardNumberCr.CardNumber , Client.Id, IsConfirmCr);
+								Credit = new Credit(1, dur, number, CardNumberCr.CardNumber , Client.Id, IsConfirmCr, DateTime.Today);
 								if (Credit.GetCurrentCredit(Credit) == null)
 								{
 									Credit.AddNewCredit(Credit, CardNumberCr);
@@ -527,8 +632,8 @@ namespace bank_application.ViewModel
 								{
 									Client = Client.AuthClient(Client);
 									Credits = Client.CreateCredits(Client.Id);
-									Cards = Client.CreateCards(Client.Id);
 									Deposits = Client.CreateDeposits(Client.Id);
+									Cards = Client.CreateCards(Client.Id);
 									ClientName = "Client: " + Client.Firstname + ' ' + Client.Surname;
 									MainWindow mainWindow = new MainWindow(this);
 									mainWindow.Show();
@@ -574,7 +679,15 @@ namespace bank_application.ViewModel
 				OnPropertyChanged("TransferCashbackCard");
 			}
 		}
-
+		public Card TransferMoneyBoxCard
+		{
+			get { return transfermoneyboxcard; }
+			set
+			{
+				transfermoneyboxcard = value;
+				OnPropertyChanged("TransferMoneyBoxCard");
+			}
+		}
 		public string TransferMoney
 		{
 			get { return transfermoney; }
@@ -676,6 +789,15 @@ namespace bank_application.ViewModel
 				OnPropertyChanged("Term");
 			}
 		}
+		public Card TopUpMobileCard
+		{
+			get { return topupmobilecard; }
+			set
+			{
+				topupmobilecard = value;
+				OnPropertyChanged("TopUpMobileCard");
+			}
+		}
 		public int Money
 		{
 			get { return money; }
@@ -770,6 +892,15 @@ namespace bank_application.ViewModel
 				OnPropertyChanged("IsConfirmDep");
 			}
 		}
+		public DateTime DateDeposit
+		{
+			get { return datedeposit; }
+			set
+			{
+				datedeposit = value;
+				OnPropertyChanged("DateDeposit");
+			}
+		}
 		public bool CheckedFType
 		{
 			get { return checkedftype; }
@@ -788,7 +919,15 @@ namespace bank_application.ViewModel
 				OnPropertyChanged("CheckedSType");
 			}
 		}
-
+		public DateTime DateCredit
+		{
+			get { return datecredit; }
+			set
+			{
+				datecredit = value;
+				OnPropertyChanged("DateCredit");
+			}
+		}
 
 		public Credit Credit
 		{
@@ -1030,6 +1169,15 @@ namespace bank_application.ViewModel
 			{
 				Client.Cashback = value;
 				OnPropertyChanged("Cashback");
+			}
+		}
+		public double MoneyBox
+		{
+			get { return Client.Moneybox; }
+			set
+			{
+				Client.Moneybox = value;
+				OnPropertyChanged("MoneyBox");
 			}
 		}
 		public event PropertyChangedEventHandler PropertyChanged;

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Data.SQLite;
+using System;
 
 namespace bank_application
 {
@@ -13,8 +14,9 @@ namespace bank_application
 		private string cardnumber;
 		private int clientid;
 		private bool isconfirmcr;
+		private DateTime datecredit;
 
-		public Credit(int Id, int Duration, int Number, string CardNumber, int ClientId, bool IsConfirmCr)
+		public Credit(int Id, int Duration, int Number, string CardNumber, int ClientId, bool IsConfirmCr, DateTime DateCredit)
 		{
 			this.Id = Id;
 			this.ClientId = ClientId;
@@ -22,12 +24,13 @@ namespace bank_application
 			this.Number = Number;
 			this.CardNumber = CardNumber;
 			this.IsConfirmCr = IsConfirmCr;
+			this.DateCredit = DateCredit;
 		}
 		public void AddNewCredit(Credit credit, Card card)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = "INSERT INTO credits ('duration', 'number','cardnumber','client_id') values ('" +
-						credit.Duration + "' , '" + credit.Number + "' , '" + credit.CardNumber + "' , '" + credit.ClientId + "')";
+			m_sqlCmd.CommandText = "INSERT INTO credits ('duration', 'number','cardnumber','client_id','date') values ('" +
+						credit.Duration + "' , '" + credit.Number + "' , '" + credit.CardNumber + "' , '" + credit.ClientId + "' , '" + credit.DateCredit +"')";
 			m_sqlCmd.ExecuteNonQuery();
 			CloseConnection();
 			CheckNewCredits(card, credit);
@@ -36,9 +39,10 @@ namespace bank_application
 		{
 			if (credit.CardNumber == card.CardNumber)
 			{
+				int money = card.Money + credit.Number;
 				OpenConnection();
 				m_sqlCmd.CommandText = @"UPDATE cards SET money = @money WHERE card_id = @cardid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@money") { Value = credit.Number });
+				m_sqlCmd.Parameters.Add(new SQLiteParameter("@money") { Value = money });
 				m_sqlCmd.Parameters.Add(new SQLiteParameter("@cardid") { Value = card.Id });
 				m_sqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
@@ -63,7 +67,7 @@ namespace bank_application
 			if (reader.Read())
 			{
 				credit = new Credit(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2),
-					reader.GetString(3) ,reader.GetInt32(4), CheckConfirm(reader.GetInt32(5)));
+					reader.GetString(3) ,reader.GetInt32(4), CheckConfirm(reader.GetInt32(5)), Convert.ToDateTime(reader.GetString(6)));
 				reader.Close();
 				CloseConnection();
 				return credit;
@@ -117,6 +121,15 @@ namespace bank_application
 			{
 				isconfirmcr = value;
 				OnPropertyChanged("IsConfirmCr");
+			}
+		}
+		public DateTime DateCredit
+		{
+			get { return datecredit; }
+			set
+			{
+				datecredit = value;
+				OnPropertyChanged("DateCredit");
 			}
 		}
 		public event PropertyChangedEventHandler PropertyChanged;

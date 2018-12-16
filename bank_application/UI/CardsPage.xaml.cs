@@ -14,10 +14,5 @@ namespace bank_application
             InitializeComponent();
 			DataContext = uvm;
 		}
-
-		private void btnClickTopUp(object sender, RoutedEventArgs e)
-		{
-			//окно пополнения мобильного
-		}
 	}
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bank_application.UI"
         mc:Ignorable="d"
-        Title="ChangeData" Height="139.678" Width="379.776">
+        Title="ChangeData" Height="139.678" Width="379.776" ResizeMode="NoResize" Icon="/bank_application;component/img/bank_78916.png">
 	<Window.Triggers>
 		<EventTrigger RoutedEvent="Window.Loaded">
 			<EventTrigger.Actions>

@@ -1,8 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Data.SQLite;
-using System.Data;
-using System;
 using bank_application.Command;
 
 namespace bank_application
@@ -31,6 +28,11 @@ namespace bank_application
 						senderCard.CardNumber + "' , '" + CardGive.CardNumber + "' , '" + sum + "')";
 			m_sqlCmd.ExecuteNonQuery();
 			CloseConnection();
+		}
+		public void TopUpMobile(Card senderCard, int sum)
+		{
+			int senderMoney = senderCard.Money - sum;
+			senderCard.UpdateCardMoney(senderCard, senderMoney);
 		}
 		private void UpdateCards(Card cardSend, Card cardGive, int sum)
 		{
