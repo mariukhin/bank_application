@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
+using System.Globalization;
 
 namespace bank_application
 {
@@ -8,19 +9,19 @@ namespace bank_application
 	{
 		private ObservableCollection<Request> requests = new ObservableCollection<Request>();
 
-		public Admin(int Id, string Firstname, string Surname, string DateOfBirth, string PassportSeries, int PassportNum,
-			string Adress, string Email, string Phonenumber, string Password) : base(Id, Firstname, Surname, DateOfBirth, PassportSeries, PassportNum, Adress, Email, Phonenumber, Password)
+		public Admin(int id, string firstname, string surname, string dateOfBirth, string passportSeries, int passportNum,
+			string adress, string email, string phonenumber, string password) : base(id, firstname, surname, dateOfBirth, passportSeries, passportNum, adress, email, phonenumber, password)
 		{
-			this.Id = Id;
-			this.Firstname = Firstname;
-			this.Surname = Surname;
-			this.DateOfBirth = DateOfBirth;
-			this.PassportSeries = PassportSeries;
-			this.PassportNum = PassportNum;
-			this.Adress = Adress;
-			this.Email = Email;
-			this.Phonenumber = Phonenumber;
-			this.Password = Password;
+			this.Id = id;
+			this.Firstname = firstname;
+			this.Surname = surname;
+			this.DateOfBirth = dateOfBirth;
+			this.PassportSeries = passportSeries;
+			this.PassportNum = passportNum;
+			this.Adress = adress;
+			this.Email = email;
+			this.Phonenumber = phonenumber;
+			this.Password = password;
 			
 		}
 		public Admin AuthAdmin(Admin admin)
@@ -38,11 +39,11 @@ namespace bank_application
 		private Admin CheckAdmin(Admin admin)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"SELECT * FROM admins WHERE password = @password";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@password") { Value = admin.Password });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"SELECT * FROM admins WHERE password = @password";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@password") { Value = admin.Password });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 			if (reader.Read())
 			{
 				admin = new Admin(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4),
@@ -56,109 +57,111 @@ namespace bank_application
 				return null;
 			}
 		}
-		public ObservableCollection<Request> CreateRequests(int admin_id)
+		public ObservableCollection<Request> CreateRequests(int adminid)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"SELECT * FROM requests WHERE admin_id = @adminId";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@adminId") { Value = admin_id });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"SELECT * FROM requests WHERE admin_id = @adminId";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@adminId") { Value = adminid });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 			while (reader.Read())
 			{
 				Request requst = new Request(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3),
-					Convert.ToDateTime(reader.GetString(4)), reader.GetString(5));
+					Convert.ToDateTime(reader.GetString(4), CultureInfo.CurrentCulture), reader.GetString(5));
 				Requests.Add(requst);
 			}
 			reader.Close();
 			CloseConnection();
 			return Requests;
 		}
-		public void DeleteSelectedItem(string descr, int smth_id, int req_id)
+		public void DeleteSelectedItem(string descr, int smthId, int reqId)
 		{
 			OpenConnection();
+			if (descr == null)
+			{
+				throw new ArgumentNullException(nameof(descr));
+			}
 			if (descr.Contains("credit"))
 			{
-				m_sqlCmd.CommandText = @"DELETE FROM credits WHERE credit_id = @smthid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smth_id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"DELETE FROM credits WHERE credit_id = @smthid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smthId });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 			else if (descr.Contains("deposit"))
 			{
-				m_sqlCmd.CommandText = @"DELETE FROM deposits WHERE deposit_id = @smthid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smth_id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"DELETE FROM deposits WHERE deposit_id = @smthid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smthId });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 			else if (descr.Contains("card"))
 			{
-				m_sqlCmd.CommandText = @"DELETE FROM cards WHERE card_id = @smthid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smth_id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"DELETE FROM cards WHERE card_id = @smthid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smthId });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 			CloseConnection();
-			DeleteRequest(req_id);
+			DeleteRequest(reqId);
 		}
-		public void ParseDescription(string descr, int smth_id, int req_id)
+		public void ParseDescription(string descr, int smthId, int reqId)
 		{
 			OpenConnection();
 			if (descr.Contains("credit"))
 			{
-				m_sqlCmd.CommandText = @"UPDATE credits SET isConfirm = 1 WHERE credit_id = @smthid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smth_id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"UPDATE credits SET isConfirm = 1 WHERE credit_id = @smthid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smthId });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 			else if (descr.Contains("deposit"))
 			{
-				m_sqlCmd.CommandText = @"UPDATE deposits SET isConfirm = 1 WHERE deposit_id = @smthid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smth_id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"UPDATE deposits SET isConfirm = 1 WHERE deposit_id = @smthid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smthId });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 			else if (descr.Contains("card"))
 			{
-				m_sqlCmd.CommandText = @"UPDATE cards SET isConfirm = 1 WHERE card_id = @smthid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smth_id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"UPDATE cards SET isConfirm = 1 WHERE card_id = @smthid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smthId });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 			CloseConnection();
-			DeleteRequest(req_id);
+			DeleteRequest(reqId);
 		}
 		private void DeleteRequest(int req_id)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"DELETE FROM requests WHERE request_id = @reqId";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@reqId") { Value = req_id });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"DELETE FROM requests WHERE request_id = @reqId";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@reqId") { Value = req_id });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 			reader.Close();
 			CloseConnection();
 		}
-		public ObservableCollection<Request> Requests
+
+		public ObservableCollection<Request> Requests => requests;
+		public void SetRequests(ObservableCollection<Request> value)
 		{
-			get { return requests; }
-			set
-			{
-				requests = value;
-				OnPropertyChanged("Requests");
-			}
+			requests = value;
+			OnPropertyChanged("Requests");
 		}
 		public override string ToString()
 		{

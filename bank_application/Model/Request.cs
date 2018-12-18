@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Data.SQLite;
 using bank_application.Command;
+using System.Globalization;
 
 namespace bank_application
 {
@@ -30,10 +31,10 @@ namespace bank_application
 		public void AddNewRequest(Request request)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = "INSERT INTO requests ('client_id', 'admin_id', 'smth_id', 'date', 'descr') values ('" +
+			SqlCmd.CommandText = "INSERT INTO requests ('client_id', 'admin_id', 'smth_id', 'date', 'descr') values ('" +
 						request.ClientId + "' , '" + request.AdminId + "' , '" + request.SmthId + "','" + 
-						request.Date.ToString() + "' , '" + request.Description + "')";
-			m_sqlCmd.ExecuteNonQuery();
+						request.Date.ToString(CultureInfo.CurrentCulture) + "' , '" + request.Description + "')";
+			SqlCmd.ExecuteNonQuery();
 			CloseConnection();
 		}
 
@@ -86,8 +87,7 @@ namespace bank_application
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName]string prop = "")
 		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(prop));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 		}
 	}
 }

@@ -57,9 +57,9 @@
 		<Label Content="Login" HorizontalAlignment="Left" Margin="149,164,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="16" Background="#00000000" Foreground="#FF0C0C0C" FontWeight="Bold" RenderTransformOrigin="0.389,0.458"/>
 		<Label Content="Password" HorizontalAlignment="Left" Margin="127,210,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="16" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29"/>
 		<Button Margin="224.2,277.4,89.2,123.2" Width="109"
-	  Height="25" HorizontalAlignment="Center" Click="btnReg_Click" FontFamily="Verdana" FontWeight="Medium" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Registration" Grid.Column="1" Grid.Row="1"/>
-		<Button Margin="199,346,196.4,93.2" Width="98" HorizontalAlignment="Center" Click="btnClose_Click" FontFamily="Verdana" BorderBrush="{x:Null}" RenderTransformOrigin="0.5,0.5" Content="Close"/>
-		<TextBox Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  x:Name ="pbPassword" HorizontalAlignment="Left" Margin="240,213,0,0" VerticalAlignment="Top" Width="143" Height="21" TextChanged="pbPassword_TextChanged"/>
+	  Height="25" HorizontalAlignment="Center" Click="BtnReg_Click" FontFamily="Verdana" FontWeight="Medium" BorderBrush="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" Content="Registration" Grid.Column="1" Grid.Row="1"/>
+		<Button Margin="199,346,196.4,93.2" Width="98" HorizontalAlignment="Center" Click="BtnClose_Click" FontFamily="Verdana" BorderBrush="{x:Null}" RenderTransformOrigin="0.5,0.5" Content="Close"/>
+		<TextBox Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  x:Name ="pbPassword" HorizontalAlignment="Left" Margin="240,213,0,0" VerticalAlignment="Top" Width="143" Height="21" TextChanged="PbPassword_TextChanged"/>
 		<Grid.Background>
 			<ImageBrush ImageSource="/Img/main_back.png"/>
 		</Grid.Background>

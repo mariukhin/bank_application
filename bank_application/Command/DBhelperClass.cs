@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿
 using System.Data.SQLite;
 using System.Data;
 
@@ -7,37 +6,32 @@ namespace bank_application.Command
 {
 	public class DBhelperClass
 	{
-		public string dbFileName;
-		public SQLiteConnection m_dbConn;
-		public SQLiteCommand m_sqlCmd;
+		public string DbFileName { get; set; }
+		public SQLiteConnection DbConn { get; set; }
+		public SQLiteCommand SqlCmd { get; set; }
 
 		public DBhelperClass() { }
 
 		public void OpenConnection()
 		{
-			dbFileName = "BankDB.db";
-			m_dbConn = new SQLiteConnection("Data Source=" + dbFileName + ";Version=3;");
-			m_dbConn.Open();
-			m_sqlCmd = new SQLiteCommand();
-			m_sqlCmd.Connection = m_dbConn;
+			DbFileName = "BankDB.db";
+			DbConn = new SQLiteConnection("Data Source=" + DbFileName + ";Version=3;");
+			DbConn.Open();
+			SqlCmd = new SQLiteCommand
+			{
+				Connection = DbConn
+			};
 		}
 		public void CloseConnection()
 		{
-			if (m_dbConn != null && m_dbConn.State != ConnectionState.Closed)
+			if (DbConn != null && DbConn.State != ConnectionState.Closed)
 			{
-				m_dbConn.Close();
+				DbConn.Close();
 			}
 		}
-		public bool CheckConfirm(int confirm)
+		public static bool CheckConfirm(int confirm)
 		{
-			if (confirm == 1)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			return confirm == 1 ? true : false;
 		}
 
 	}

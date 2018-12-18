@@ -11,12 +11,12 @@ namespace WcfServiceApp
 	// ПРИМЕЧАНИЕ. Чтобы запустить клиент проверки WCF для тестирования службы, выберите элементы CountService.svc или CountService.svc.cs в обозревателе решений и начните отладку.
 	public class CountService : ICountService
 	{
-
 		public int CalcCredit(int Duration, int Money, DateTime date)
 		{
 			DateTime dateTime = DateTime.Today;
 			DateTime finalDate = date.AddMonths(Duration);
-			if (CheckDate(dateTime, finalDate))
+			TimeSpan time = finalDate - dateTime;
+			if (time.Days == 0)
 			{
 				return Money;
 			}
@@ -51,7 +51,7 @@ namespace WcfServiceApp
 			}
 			return 0;
 		}
-		public bool CheckDate(DateTime todayDate, DateTime finalDate)
+		public static bool CheckDate(DateTime todayDate, DateTime finalDate)
 		{
 			if (todayDate == finalDate)
 			{
@@ -62,7 +62,7 @@ namespace WcfServiceApp
 				return false;
 			}
 		}
-		public int SubstractDates( DateTime todayDate, DateTime finalDate)
+		public static int SubstractDates( DateTime todayDate, DateTime finalDate)
 		{
 			int intReturn = 0;
 			bool sameMonth = false;
@@ -99,7 +99,7 @@ namespace WcfServiceApp
 
 			return intReturn;
 		}
-		public DateTime AddDateMonth(DateTime todayTime,int month)
+		public static DateTime AddDateMonth(DateTime todayTime,int month)
 		{
 			DateTime date = todayTime.AddMonths(month);
 			return date;

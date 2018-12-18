@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Data.SQLite;
 using bank_application.Command;
 using System;
+using System.Globalization;
 
 namespace bank_application
 {
@@ -34,16 +35,16 @@ namespace bank_application
 			if (CheckPayingCapacity(deposit.Number, card.Money))
 			{
 				OpenConnection();
-				m_sqlCmd.CommandText = "INSERT INTO deposits ('duration', 'number','cardnumber','type', 'client_id', 'date') values ('" +
+				SqlCmd.CommandText = "INSERT INTO deposits ('duration', 'number','cardnumber','type', 'client_id', 'date') values ('" +
 							deposit.Duration + "' , '" + deposit.Number + "' , '" + deposit.CardNumber + "' , '" + deposit.Type +
 							"' , '" + deposit.ClientId + "' , '" + deposit.DateDeposit + "')";
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.ExecuteNonQuery();
 				CloseConnection();
 				return true;
 			}
 			return false;
 		}
-		private bool CheckPayingCapacity(int depositmoney, int cardmoney)
+		private static bool CheckPayingCapacity(int depositmoney, int cardmoney)
 		{
 			if (depositmoney <= cardmoney)
 			{
@@ -54,20 +55,20 @@ namespace bank_application
 		public Deposit GetCurrentDeposit(Deposit deposit)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"SELECT * FROM deposits WHERE duration = @duration and number = @number 
+			SqlCmd.CommandText = @"SELECT * FROM deposits WHERE duration = @duration and number = @number 
 				and type = @type and client_id = @client_Id";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@duration") { Value = deposit.Duration });
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@number") { Value = deposit.Number });
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@type") { Value = deposit.Type });
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@client_Id") { Value = deposit.ClientId });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.Parameters.Add(new SQLiteParameter("@duration") { Value = deposit.Duration });
+			SqlCmd.Parameters.Add(new SQLiteParameter("@number") { Value = deposit.Number });
+			SqlCmd.Parameters.Add(new SQLiteParameter("@type") { Value = deposit.Type });
+			SqlCmd.Parameters.Add(new SQLiteParameter("@client_Id") { Value = deposit.ClientId });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 
 			if (reader.Read())
 			{
 				deposit = new Deposit(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2),reader.GetString(3),
-					reader.GetString(4), reader.GetInt32(5), CheckConfirm(reader.GetInt32(6)), Convert.ToDateTime(reader.GetString(7)));
+					reader.GetString(4), reader.GetInt32(5), CheckConfirm(reader.GetInt32(6)), Convert.ToDateTime(reader.GetString(7), CultureInfo.CurrentCulture));
 				reader.Close();
 				CloseConnection();
 				return deposit;
@@ -77,14 +78,14 @@ namespace bank_application
 				return null;
 			}
 		}
-		public void DeleteSelectedDeposit(int deposit_id)
+		public void DeleteSelectedDeposit(int depositId)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"DELETE FROM deposits WHERE deposit_id = @smthid";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = deposit_id });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"DELETE FROM deposits WHERE deposit_id = @smthid";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = depositId });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 			CloseConnection();
 		}
 		public int Duration
@@ -162,8 +163,7 @@ namespace bank_application
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName]string prop = "")
 		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(prop));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 		}
 	}
 }

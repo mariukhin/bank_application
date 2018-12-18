@@ -1,11 +1,13 @@
 ﻿using System.Data.SQLite;
 using System.Collections.ObjectModel;
 using System;
-using bank_application.CountService;
-
+using System.Globalization;
 
 namespace bank_application
 {
+	/// <summary>
+	/// Class witch works with user
+	/// </summary>
     public class Client : User
 	{
 		private ObservableCollection<Credit> credits = new ObservableCollection<Credit>();
@@ -16,6 +18,22 @@ namespace bank_application
 		private double cashback;
 		private double moneybox;
 
+		/// <summary>
+		/// Class Client Constructor
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <param name="Firstname"></param>
+		/// <param name="Surname"></param>
+		/// <param name="DateOfBirth"></param>
+		/// <param name="PassportSeries"></param>
+		/// <param name="PassportNum"></param>
+		/// <param name="Adress"></param>
+		/// <param name="Email"></param>
+		/// <param name="Phonenumber"></param>
+		/// <param name="Login"></param>
+		/// <param name="Password"></param>
+		/// <param name="Cashback"></param>
+		/// <param name="Moneybox"></param>
 		public Client(int Id,string Firstname, string Surname, string DateOfBirth, string PassportSeries, int PassportNum,
 			string Adress, string Email, string Phonenumber, string Login, string Password, double Cashback, double Moneybox) : base(Id, Firstname, Surname, DateOfBirth, PassportSeries, PassportNum, Adress, Email, Phonenumber, Password)
 		{
@@ -33,18 +51,27 @@ namespace bank_application
 			this.Cashback = Cashback;
 			this.Moneybox = Moneybox;
 		}
+		/// <summary>
+		/// Method witch add new client to DataBase
+		/// </summary>
+		/// <param name="client"></param>
 		public void AddNewClient(Client client)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = "INSERT INTO clients ('first_name', 'last_name', 'dateofbirth', " +
+			SqlCmd.CommandText = "INSERT INTO clients ('first_name', 'last_name', 'dateofbirth', " +
 					"'passportseries', 'passportnum', 'adress', 'email','phone', 'login', 'password', 'cashback','moneybox') values ('" +
 					client.Firstname + "' , '" + client.Surname + "' , '" + client.DateOfBirth + "', '" +
 					client.PassportSeries + "', '" + client.PassportNum + "', '" + client.Adress + "', '" +
 					client.Email + "', '" + client.Phonenumber + "', '" + client.Login + "', '" +
 					client.Password + "', '" + 0 + "', '" + 0 + "')";
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.ExecuteNonQuery();
 			CloseConnection();
 		}
+		/// <summary>
+		/// Check authorisation of Client
+		/// </summary>
+		/// <param name="client"></param>
+		/// <returns>newClient if Client not null otherwise returns null</returns>
 		public Client AuthClient(Client client)
 		{
 			Client newClient = CheckClient(client);
@@ -60,12 +87,12 @@ namespace bank_application
 		private Client CheckClient(Client client)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"SELECT * FROM clients WHERE login = @login and password = @password";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@login") { Value = client.Login });
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@password") { Value = client.Password });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"SELECT * FROM clients WHERE login = @login and password = @password";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@login") { Value = client.Login });
+			SqlCmd.Parameters.Add(new SQLiteParameter("@password") { Value = client.Password });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 			if (reader.Read())
 			{
 				client = new Client(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4),
@@ -83,11 +110,11 @@ namespace bank_application
 		public Client GetClientById(int clientId)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"SELECT * FROM clients WHERE client_id = @clientId";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientId") { Value = clientId });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"SELECT * FROM clients WHERE client_id = @clientId";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@clientId") { Value = clientId });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 			if (reader.Read())
 			{
 				Client client = new Client(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4),
@@ -102,68 +129,68 @@ namespace bank_application
 				return null;
 			}
 		}
-		public void UpdateCashback(Client client, double cashback)
+		public void UpdateCashback(Client client, double cback)
 		{
 			double newCash;
 			if (cashback == 0.0)
 			{
-				newCash = cashback;
+				newCash = cback;
 			}
 			else
 			{
-				newCash = client.Cashback + cashback;
+				newCash = client.Cashback + cback;
 			}
 			OpenConnection();
-			m_sqlCmd.CommandText = @"UPDATE clients SET cashback = @cashback WHERE client_id = @clientid";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@cashback") { Value = newCash });
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"UPDATE clients SET cashback = @cashback WHERE client_id = @clientid";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@cashback") { Value = newCash });
+			SqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 			reader.Close();
 			CloseConnection();
 		}
-		public void UpdateMoneyBox(Client client, double moneybox)
+		public void UpdateMoneyBox(Client client, double mbox)
 		{
 			double newCash;
-			if (moneybox == 0.0)
+			if (mbox == 0.0)
 			{
-				newCash = moneybox;
+				newCash = mbox;
 			}
 			else
 			{
-				newCash = client.Moneybox + moneybox;
+				newCash = client.Moneybox + mbox;
 			}
 			OpenConnection();
-			m_sqlCmd.CommandText = @"UPDATE clients SET moneybox = @moneybox WHERE client_id = @clientid";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@moneybox") { Value = newCash });
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"UPDATE clients SET moneybox = @moneybox WHERE client_id = @clientid";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@moneybox") { Value = newCash });
+			SqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 			reader.Close();
 			CloseConnection();
 		}
 		public void UpdateLogin(string data, Client client)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"UPDATE clients SET login = @login WHERE client_id = @clientid";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@login") { Value = data });
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"UPDATE clients SET login = @login WHERE client_id = @clientid";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@login") { Value = data });
+			SqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 			reader.Close();
 			CloseConnection();
 		}
-		public ObservableCollection<Card> CreateCards(int client_id)
+		public ObservableCollection<Card> CreateCards(int clientId)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"SELECT * FROM cards WHERE client_id = @clientId and isconfirm = 1";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientId") { Value = client_id });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"SELECT * FROM cards WHERE client_id = @clientId and isconfirm = 1";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@clientId") { Value = clientId });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 			while (reader.Read())
 			{
 				Card card = new Card(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3),
@@ -174,58 +201,58 @@ namespace bank_application
 			return Cards;
 		}
 		
-		public ObservableCollection<Credit> CreateCredits(int client_id)
+		public ObservableCollection<Credit> CreateCredits(int clientId)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"SELECT * FROM credits WHERE client_id = @clientId and isconfirm = 1";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientId") { Value = client_id });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"SELECT * FROM credits WHERE client_id = @clientId and isconfirm = 1";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@clientId") { Value = clientId });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 			while (reader.Read())
 			{
 				Credit credit = new Credit(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2),
-					reader.GetString(3), reader.GetInt32(4), CheckConfirm(reader.GetInt32(5)), Convert.ToDateTime(reader.GetString(6)));
+					reader.GetString(3), reader.GetInt32(4), CheckConfirm(reader.GetInt32(5)), Convert.ToDateTime(reader.GetString(6), CultureInfo.CurrentCulture));
 				Credits.Add(credit);
 			}
 			CloseConnection();
 
-			CountServiceClient countClient = new CountServiceClient();
+			var client = new Service.CountServiceClient("NetTcpBinding_ICountService");
+	
 			foreach (Credit credit in Credits)
 			{
-				int offence = countClient.CalcCredit(credit.Duration, credit.Number, credit.DateCredit);
+				int offence = client.CalcCredit(credit.Duration, credit.Number, credit.DateCredit);
 				if (offence != 0)
 				{
 					Card card = new Card(1, credit.CardNumber, "dffdsfwef", 2355, 544, "03.11.2023", 0, 2, true);
 					card = card.GetCurrentCard(card);
 					int newCardMoney = card.Money - offence;
 					card.UpdateCardMoney(card, newCardMoney);
-					Credits.Remove(credit);
-					DeleteSelectedItem(credit.Id, "credit");
 				}
 			}
-			countClient.Close();
+			client.Close();
 			return Credits;
 		}
-		public ObservableCollection<Deposit> CreateDeposits(int client_id)
+		public ObservableCollection<Deposit> CreateDeposits(int clientId)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"SELECT * FROM deposits WHERE client_id = @clientId and isconfirm = 1";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientId") { Value = client_id });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"SELECT * FROM deposits WHERE client_id = @clientId and isconfirm = 1";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@clientId") { Value = clientId });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 			while (reader.Read())
 			{
 				Deposit deposit = new Deposit(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetString(3),
-					reader.GetString(4), reader.GetInt32(5), CheckConfirm(reader.GetInt32(6)), Convert.ToDateTime(reader.GetString(7)));
+					reader.GetString(4), reader.GetInt32(5), CheckConfirm(reader.GetInt32(6)), Convert.ToDateTime(reader.GetString(7), CultureInfo.CurrentCulture));
 				Deposits.Add(deposit);
 			}
 			CloseConnection();
-			CountServiceClient depositClient = new CountServiceClient();
+
+			Service.CountServiceClient client = new Service.CountServiceClient("NetTcpBinding_ICountService");
 			foreach (Deposit deposit in Deposits)
 			{
-				double pay = depositClient.CalcDeposit(deposit.Duration, deposit.Number, deposit.DateDeposit);
+				double pay = client.CalcDeposit(deposit.Duration, deposit.Number, deposit.DateDeposit);
 				if (pay != 0)
 				{
 					Card card = new Card(1, deposit.CardNumber, "dffdsfwef", 2355, 544, "03.11.2023", 0, 2, true);
@@ -234,37 +261,39 @@ namespace bank_application
 					card.UpdateCardMoney(card, newCardMoney);
 				}
 			}
-			depositClient.Close();
+			client.Close();
 			return Deposits;
+			//Credits.Remove(credit);
+			//DeleteSelectedItem(credit.Id, "credit");
 		}
-		public void DeleteSelectedItem(int smth_id ,string descr)
+		public void DeleteSelectedItem(int smthId ,string descr)
 		{
 			OpenConnection();
 			if (descr.Contains("credit"))
 			{
-				m_sqlCmd.CommandText = @"DELETE FROM credits WHERE credit_id = @smthid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smth_id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"DELETE FROM credits WHERE credit_id = @smthid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smthId });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 			else if (descr.Contains("deposit"))
 			{
-				m_sqlCmd.CommandText = @"DELETE FROM deposits WHERE deposit_id = @smthid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smth_id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"DELETE FROM deposits WHERE deposit_id = @smthid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smthId });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 			else if (descr.Contains("card"))
 			{
-				m_sqlCmd.CommandText = @"DELETE FROM cards WHERE card_id = @smthid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smth_id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"DELETE FROM cards WHERE card_id = @smthid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = smthId });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 			CloseConnection();
@@ -275,56 +304,56 @@ namespace bank_application
 			if (type.Contains("first_name"))
 			{
 				client.Firstname = data;
-				m_sqlCmd.CommandText = @"UPDATE clients SET first_name = @param WHERE client_id = @clientid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value =  client.Id});
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"UPDATE clients SET first_name = @param WHERE client_id = @clientid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
+				SqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value =  client.Id});
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 			else if (type.Contains("last_name"))
 			{
 				client.Surname = data;
-				m_sqlCmd.CommandText = @"UPDATE clients SET last_name = @param WHERE client_id = @clientid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"UPDATE clients SET last_name = @param WHERE client_id = @clientid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
+				SqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 			else if (type.Contains("password"))
 			{
 				client.Password = data;
-				m_sqlCmd.CommandText = @"UPDATE clients SET password = @param WHERE client_id = @clientid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"UPDATE clients SET password = @param WHERE client_id = @clientid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
+				SqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 			else if (type.Contains("e-mail"))
 			{
 				client.Email = data;
-				m_sqlCmd.CommandText = @"UPDATE clients SET email = @param WHERE client_id = @clientid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"UPDATE clients SET email = @param WHERE client_id = @clientid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
+				SqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 			else if (type.Contains("phone"))
 			{
 				client.Phonenumber = data;
-				m_sqlCmd.CommandText = @"UPDATE clients SET phone = @param WHERE client_id = @clientid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"UPDATE clients SET phone = @param WHERE client_id = @clientid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@param") { Value = data });
+				SqlCmd.Parameters.Add(new SQLiteParameter("@clientid") { Value = client.Id });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 			}
 
@@ -357,32 +386,26 @@ namespace bank_application
 				OnPropertyChanged("Moneybox");
 			}
 		}
-		public ObservableCollection<Credit> Credits
+
+		public ObservableCollection<Credit> Credits => credits;
+		public void SetCredits(ObservableCollection<Credit> value)
 		{
-			get { return credits; }
-			set
-			{
-				credits = value;
-				OnPropertyChanged("Credits");
-			}
+			credits = value;
+			OnPropertyChanged("Credits");
 		}
-		public ObservableCollection<Deposit> Deposits
+
+		public ObservableCollection<Deposit> Deposits => deposits;
+		public void SetDeposits(ObservableCollection<Deposit> value)
 		{
-			get { return deposits; }
-			set
-			{
-				deposits = value;
-				OnPropertyChanged("Deposits");
-			}
+			deposits = value;
+			OnPropertyChanged("Deposits");
 		}
-		public ObservableCollection<Card> Cards
+
+		public ObservableCollection<Card> Cards => cards;
+		public void SetCards(ObservableCollection<Card> value)
 		{
-			get { return cards; }
-			set
-			{
-				cards = value;
-				OnPropertyChanged("Cards");
-			}
+			cards = value;
+			OnPropertyChanged("Cards");
 		}
 
 		public override string ToString()

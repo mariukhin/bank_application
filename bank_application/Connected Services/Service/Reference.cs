@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace bank_application.CountService {
+namespace bank_application.Service {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="CountService.ICountService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Service.ICountService")]
     public interface ICountService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICountService/CalcCredit", ReplyAction="http://tempuri.org/ICountService/CalcCreditResponse")]
@@ -29,12 +29,12 @@ namespace bank_application.CountService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface ICountServiceChannel : bank_application.CountService.ICountService, System.ServiceModel.IClientChannel {
+    public interface ICountServiceChannel : bank_application.Service.ICountService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class CountServiceClient : System.ServiceModel.ClientBase<bank_application.CountService.ICountService>, bank_application.CountService.ICountService {
+    public partial class CountServiceClient : System.ServiceModel.ClientBase<bank_application.Service.ICountService>, bank_application.Service.ICountService {
         
         public CountServiceClient() {
         }

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Data.SQLite;
 using System;
+using System.Globalization;
 
 namespace bank_application
 {
@@ -29,24 +30,24 @@ namespace bank_application
 		public void AddNewCredit(Credit credit, Card card)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = "INSERT INTO credits ('duration', 'number','cardnumber','client_id','date') values ('" +
+			SqlCmd.CommandText = "INSERT INTO credits ('duration', 'number','cardnumber','client_id','date') values ('" +
 						credit.Duration + "' , '" + credit.Number + "' , '" + credit.CardNumber + "' , '" + credit.ClientId + "' , '" + credit.DateCredit +"')";
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.ExecuteNonQuery();
 			CloseConnection();
 			CheckNewCredits(card, credit);
 		}
 		public void CheckNewCredits(Card card, Credit credit)
 		{
-			if (credit.CardNumber == card.CardNumber)
+			if (credit.CardNumber.Equals(card.CardNumber, StringComparison.Ordinal))
 			{
 				int money = card.Money + credit.Number;
 				OpenConnection();
-				m_sqlCmd.CommandText = @"UPDATE cards SET money = @money WHERE card_id = @cardid";
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@money") { Value = money });
-				m_sqlCmd.Parameters.Add(new SQLiteParameter("@cardid") { Value = card.Id });
-				m_sqlCmd.ExecuteNonQuery();
+				SqlCmd.CommandText = @"UPDATE cards SET money = @money WHERE card_id = @cardid";
+				SqlCmd.Parameters.Add(new SQLiteParameter("@money") { Value = money });
+				SqlCmd.Parameters.Add(new SQLiteParameter("@cardid") { Value = card.Id });
+				SqlCmd.ExecuteNonQuery();
 				SQLiteDataReader reader;
-				reader = m_sqlCmd.ExecuteReader();
+				reader = SqlCmd.ExecuteReader();
 				reader.Close();
 				CloseConnection();
 			}
@@ -54,20 +55,20 @@ namespace bank_application
 		public Credit GetCurrentCredit(Credit credit)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"SELECT * FROM credits WHERE duration = @duration and 
+			SqlCmd.CommandText = @"SELECT * FROM credits WHERE duration = @duration and 
 				number = @number and cardnumber = @cardnumber and client_id = @client_Id";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@duration") { Value = credit.Duration });
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@number") { Value = credit.Number });
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@cardnumber") { Value = credit.CardNumber });
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@client_Id") { Value = credit.ClientId });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.Parameters.Add(new SQLiteParameter("@duration") { Value = credit.Duration });
+			SqlCmd.Parameters.Add(new SQLiteParameter("@number") { Value = credit.Number });
+			SqlCmd.Parameters.Add(new SQLiteParameter("@cardnumber") { Value = credit.CardNumber });
+			SqlCmd.Parameters.Add(new SQLiteParameter("@client_Id") { Value = credit.ClientId });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 
 			if (reader.Read())
 			{
 				credit = new Credit(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2),
-					reader.GetString(3) ,reader.GetInt32(4), CheckConfirm(reader.GetInt32(5)), Convert.ToDateTime(reader.GetString(6)));
+					reader.GetString(3) ,reader.GetInt32(4), CheckConfirm(reader.GetInt32(5)), Convert.ToDateTime(reader.GetString(6), CultureInfo.CurrentCulture));
 				reader.Close();
 				CloseConnection();
 				return credit;
@@ -135,8 +136,7 @@ namespace bank_application
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName]string prop = "")
 		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(prop));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 		}
 	}
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="34a51014-7506-4faf-9e51-bd19d9fc4038" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1ddcbddc-9669-44a6-a6b2-08c8463e56a9" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:54505/CountService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8080/" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="CountService.wsdl" MetadataType="Wsdl" ID="bf360c73-d359-4c5d-9f79-b6e58283a04a" SourceId="1" SourceUrl="http://localhost:54505/CountService.svc?wsdl" />
-    <MetadataFile FileName="CountService.xsd" MetadataType="Schema" ID="344a0ab7-07d7-4e51-8414-c6761195da7e" SourceId="1" SourceUrl="http://localhost:54505/CountService.svc?xsd=xsd0" />
-    <MetadataFile FileName="CountService.disco" MetadataType="Disco" ID="ec70312e-c776-4bd5-9a7c-ee1e5d046417" SourceId="1" SourceUrl="http://localhost:54505/CountService.svc?disco" />
-    <MetadataFile FileName="CountService1.xsd" MetadataType="Schema" ID="1874a860-b3d4-480c-a5c0-8585ceb6f655" SourceId="1" SourceUrl="http://localhost:54505/CountService.svc?xsd=xsd1" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="0f9c1cf2-28fe-4582-aac3-ee6b1f595797" SourceId="1" SourceUrl="http://localhost:8080/?disco" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="d4c3dda9-c496-4c13-8fb0-942b5f088913" SourceId="1" SourceUrl="http://localhost:8080/?xsd=xsd0" />
+    <MetadataFile FileName="CountService.wsdl" MetadataType="Wsdl" ID="c126f791-67f9-45e5-a899-e1cded203cc8" SourceId="1" SourceUrl="http://localhost:8080/?wsdl" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="cb94424d-5349-4b4d-a4fb-af53ab1c9c9e" SourceId="1" SourceUrl="http://localhost:8080/?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

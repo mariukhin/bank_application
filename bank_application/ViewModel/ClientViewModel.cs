@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using bank_application.UI;
 using System.Windows;
 using bank_application.Command;
+using System.Globalization;
 
 namespace bank_application.ViewModel
 {
@@ -120,7 +121,7 @@ namespace bank_application.ViewModel
 								Client.UpdateMoneyBox(Client, 0.0);
 								Cards.Clear();
 								MoneyBox = 0;
-								Cards = Client.CreateCards(Client.Id);
+								SetCards(Client.CreateCards(Client.Id));
 								Application.Current.Windows[2].Close();
 							}
 							else
@@ -161,7 +162,7 @@ namespace bank_application.ViewModel
 						if (ChangeData != null)
 						{
 							Client.UpdateInfo(ChangeDataType, ChangeData, Client);
-							if (ChangeDataType == "e-mail" || ChangeDataType == "phone")
+							if (ChangeDataType.Equals("e-mail", StringComparison.Ordinal) || ChangeDataType.Equals("phone", StringComparison.Ordinal))
 							{
 								Client.UpdateLogin(ChangeData, Client);
 							}
@@ -218,7 +219,7 @@ namespace bank_application.ViewModel
 					(cancelDepositCommand = new RelayCommand(obj =>
 					{
 						
-						if (SelectedDeposit.Type != "Without early interruption")
+						if (SelectedDeposit.Type.Equals("Without early interruption", StringComparison.Ordinal))
 						{
 							Client.DeleteSelectedItem(SelectedDeposit.Id, "deposit");
 							Deposits.Remove(SelectedDeposit);
@@ -248,7 +249,7 @@ namespace bank_application.ViewModel
 								Client.UpdateCashback(Client, 0.0);
 								Cards.Clear();
 								Cashback = 0;
-								Cards = Client.CreateCards(Client.Id);
+								SetCards(Client.CreateCards(Client.Id));
 								Application.Current.Windows[2].Close();		
 							}
 							else
@@ -288,13 +289,13 @@ namespace bank_application.ViewModel
 						{
 							if (TopUpMobileCard != null && TransferMoney != null)
 							{
-								int trmoney = Convert.ToInt32(TransferMoney);
+								int trmoney = Convert.ToInt32(TransferMoney, CultureInfo.InvariantCulture);
 								Transaction Transaction = new Transaction(1, TransferCardSend.CardNumber, null, trmoney);
 								if (Transaction.CheckPayingCapacity(trmoney, TransferCardSend.Money))
 								{
 									Transaction.TopUpMobile(TransferCardSend, trmoney);
 									Cards.Clear();
-									Cards = Client.CreateCards(Client.Id);
+									SetCards(Client.CreateCards(Client.Id));
 									Application.Current.Windows[2].Close();
 								}
 								else
@@ -339,7 +340,7 @@ namespace bank_application.ViewModel
 						{
 							if (TransferCardGive != null && TransferCardSend != null && TransferMoney != null)
 							{
-								int trmoney = Convert.ToInt32(TransferMoney);
+								int trmoney = Convert.ToInt32(TransferMoney, CultureInfo.InvariantCulture);
 								Transaction = new Transaction(1, TransferCardSend.CardNumber, TransferCardGive, trmoney);
 								if (Transaction.CheckPayingCapacity(trmoney, TransferCardSend.Money))
 								{
@@ -347,7 +348,7 @@ namespace bank_application.ViewModel
 									{
 										Transaction.CheckTransaction(TransferCardSend, TransferCardGive, trmoney);
 										Cards.Clear();
-										Cards = Client.CreateCards(Client.Id);
+										SetCards(Client.CreateCards(Client.Id));
 										Application.Current.Windows[2].Close();
 									}
 									else
@@ -398,7 +399,7 @@ namespace bank_application.ViewModel
 						{
 							if (CardName != null && PIN != null)
 							{
-								int pin = Convert.ToInt32(PIN);
+								int pin = Convert.ToInt32(PIN,CultureInfo.InvariantCulture);
 								Card = new Card(1, "3433243432325444", CardName, pin, 544, "03.11.2023",0, Client.Id, IsConfirmCard);
 								if (Card.GetCurrentCard(Card) == null)
 								{
@@ -459,8 +460,8 @@ namespace bank_application.ViewModel
 							}
 							if (NumberDep != null && DurationDep != null && TypeDep != null)
 							{
-								int number = Convert.ToInt32(NumberDep);
-								int dur = Convert.ToInt32(DurationDep);
+								int number = Convert.ToInt32(NumberDep, CultureInfo.InvariantCulture);
+								int dur = Convert.ToInt32(DurationDep, CultureInfo.InvariantCulture);
 								Deposit = new Deposit(1, dur, number,CardNumberDep.CardNumber,TypeDep, Client.Id, IsConfirmDep, DateTime.Today);
 								if (Deposit.GetCurrentDeposit(Deposit) == null)
 								{
@@ -534,8 +535,8 @@ namespace bank_application.ViewModel
 						{
 							if (NumberCr != null && DurationCr != null)
 							{
-								int number = Convert.ToInt32(NumberCr);
-								int dur = Convert.ToInt32(DurationCr);
+								int number = Convert.ToInt32(NumberCr, CultureInfo.InvariantCulture);
+								int dur = Convert.ToInt32(DurationCr, CultureInfo.InvariantCulture);
 								Credit = new Credit(1, dur, number, CardNumberCr.CardNumber , Client.Id, IsConfirmCr, DateTime.Today);
 								if (Credit.GetCurrentCredit(Credit) == null)
 								{
@@ -596,7 +597,7 @@ namespace bank_application.ViewModel
 						if (FirstName != null && SurName != null && DateOfBirth != null && Email != null && Login != null && Password != null &&
 						Adress != null && PaspSeries != null && PaspNum != null)
 						{
-							int paspNum = Convert.ToInt32(PaspNum);
+							int paspNum = Convert.ToInt32(PaspNum, CultureInfo.InvariantCulture);
 							Client = new Client(1, FirstName, SurName, DateOfBirth, PaspSeries, paspNum ,Adress, Email, Phonenumber, Login, Password, 0, 0);
 							if (Client.AuthClient(Client) == null)
 							{
@@ -631,9 +632,9 @@ namespace bank_application.ViewModel
 								if (Client.AuthClient(Client) != null)
 								{
 									Client = Client.AuthClient(Client);
-									Credits = Client.CreateCredits(Client.Id);
-									Deposits = Client.CreateDeposits(Client.Id);
-									Cards = Client.CreateCards(Client.Id);
+								SetCredits(Client.CreateCredits(Client.Id));
+								SetDeposits(Client.CreateDeposits(Client.Id));
+								SetCards(Client.CreateCards(Client.Id));
 									ClientName = "Client: " + Client.Firstname + ' ' + Client.Surname;
 									MainWindow mainWindow = new MainWindow(this);
 									mainWindow.Show();
@@ -735,14 +736,12 @@ namespace bank_application.ViewModel
 				OnPropertyChanged("Card");
 			}
 		}
-		public ObservableCollection<Card> Cards
+
+		public ObservableCollection<Card> Cards => cards;
+		public void SetCards(ObservableCollection<Card> value)
 		{
-			get { return cards; }
-			set
-			{
-				cards = value;
-				OnPropertyChanged("Cards");
-			}
+			cards = value;
+			OnPropertyChanged("Cards");
 		}
 		public string CardName
 		{
@@ -838,14 +837,12 @@ namespace bank_application.ViewModel
 				OnPropertyChanged("Deposit");
 			}
 		}
-		public ObservableCollection<Deposit> Deposits
+
+		public ObservableCollection<Deposit> Deposits => deposits;
+		public void SetDeposits(ObservableCollection<Deposit> value)
 		{
-			get { return deposits; }
-			set
-			{
-				deposits = value;
-				OnPropertyChanged("Deposits");
-			}
+			deposits = value;
+			OnPropertyChanged("Deposits");
 		}
 		public string DurationDep
 		{
@@ -983,14 +980,12 @@ namespace bank_application.ViewModel
 				OnPropertyChanged("IsConfirmCr");
 			}
 		}
-		public ObservableCollection<Credit> Credits
+
+		public ObservableCollection<Credit> Credits => credits;
+		public void SetCredits(ObservableCollection<Credit> value)
 		{
-			get { return credits; }
-			set
-			{
-				credits = value;
-				OnPropertyChanged("Credits");
-			}
+			credits = value;
+			OnPropertyChanged("Credits");
 		}
 
 
@@ -1152,7 +1147,7 @@ namespace bank_application.ViewModel
 			{
 				if (client != null)
 				{
-					return client.PassportNum.ToString();
+					return client.PassportNum.ToString(CultureInfo.InvariantCulture);
 				}
 				return paspnum;
 			}
@@ -1183,8 +1178,7 @@ namespace bank_application.ViewModel
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName]string prop = "")
 		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(prop));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 		}
 	}
 }

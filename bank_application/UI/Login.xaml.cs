@@ -19,17 +19,17 @@ namespace bank_application
 			InitializeComponent();
 			ad = new AdminDeterminant();
 		}
-		private void btnReg_Click(object sender, RoutedEventArgs e)
+		private void BtnReg_Click(object sender, RoutedEventArgs e)
 		{
 			Registration registration = new Registration();
 			registration.Show();
 		}
-		private void btnClose_Click(object sender, RoutedEventArgs e)
+		private void BtnClose_Click(object sender, RoutedEventArgs e)
 		{
 			Close();
 		}
 
-		private void pbPassword_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+		private void PbPassword_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
 		{
 			if (ad.CheckAdmin(pbPassword.Text))
 			{

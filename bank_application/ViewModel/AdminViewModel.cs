@@ -64,7 +64,7 @@ namespace bank_application.ViewModel
 							if (Admin.AuthAdmin(Admin) != null)
 							{
 								Admin = Admin.AuthAdmin(Admin);
-								Requests = Admin.CreateRequests(Admin.Id);
+								SetRequests(Admin.CreateRequests(Admin.Id));
 								AdminName = "Admin: "+ Admin.Firstname + ' ' + Admin.Surname;
 								AdminWindow adminWindow = new AdminWindow(this);
 								adminWindow.Show();
@@ -137,20 +137,17 @@ namespace bank_application.ViewModel
 				OnPropertyChanged("SelectedRequest");
 			}
 		}
-		public ObservableCollection<Request> Requests
+
+		public ObservableCollection<Request> Requests => requests;
+		public void SetRequests(ObservableCollection<Request> value)
 		{
-			get { return requests; }
-			set
-			{
-				requests = value;
-				OnPropertyChanged("Requests");
-			}
+			requests = value;
+			OnPropertyChanged("Requests");
 		}
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName]string prop = "")
 		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(prop));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 		}
 	}
 }

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Data.SQLite;
 using bank_application.Command;
+using System.Globalization;
 
 namespace bank_application
 {
@@ -45,30 +46,30 @@ namespace bank_application
 			card.CVcode = GenerateCVcode();
 			//card.Term = GenerateTerm(dt);
 			OpenConnection();
-			m_sqlCmd.CommandText = "INSERT INTO cards ('cardnumber', 'cardname','pin','cvcode','term','money','client_id') values ('" +
+			SqlCmd.CommandText = "INSERT INTO cards ('cardnumber', 'cardname','pin','cvcode','term','money','client_id') values ('" +
 						card.CardNumber + "' , '" + card.CardName + "' , '" + card.PIN + "' , '" + card.CVcode + "' , '" +
 						card.Term + "' , '" + card.Money + "' , '" + card.ClientId + "')";
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.ExecuteNonQuery();
 			CloseConnection();
 		}
-		public void DeleteSelectedCard(int card_id)
+		public void DeleteSelectedCard(int cardId)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"DELETE FROM cards WHERE card_id = @smthid";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = card_id });
-			m_sqlCmd.ExecuteNonQuery();
-			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			SqlCmd.CommandText = @"DELETE FROM cards WHERE card_id = @smthid";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@smthid") { Value = cardId });
+			SqlCmd.ExecuteNonQuery();
+			SQLiteDataReader reader = SqlCmd.ExecuteReader();
 			CloseConnection();
 		}
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Проверить аргументы или открытые методы", MessageId = "0")]
 		public Card GetCurrentCard(Card card)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"SELECT * FROM cards WHERE cardnumber = @cardnumber";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@cardnumber") { Value = card.CardNumber });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"SELECT * FROM cards WHERE cardnumber = @cardnumber";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@cardnumber") { Value = card.CardNumber });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 
 			if (reader.Read())
 			{
@@ -83,19 +84,19 @@ namespace bank_application
 				return null;
 			}
 		}
-		public void UpdateCardMoney(Card card, int money)
+		public void UpdateCardMoney(Card card, int moneyg)
 		{
 			OpenConnection();
-			m_sqlCmd.CommandText = @"UPDATE cards SET money = @money WHERE card_id = @cardid";
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@money") { Value = money });
-			m_sqlCmd.Parameters.Add(new SQLiteParameter("@cardid") { Value = card.Id });
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = @"UPDATE cards SET money = @money WHERE card_id = @cardid";
+			SqlCmd.Parameters.Add(new SQLiteParameter("@money") { Value = moneyg });
+			SqlCmd.Parameters.Add(new SQLiteParameter("@cardid") { Value = card.Id });
+			SqlCmd.ExecuteNonQuery();
 			SQLiteDataReader reader;
-			reader = m_sqlCmd.ExecuteReader();
+			reader = SqlCmd.ExecuteReader();
 			reader.Close();
 			CloseConnection();
 		}
-		private string GenerateCardNumber()
+		private static string GenerateCardNumber()
 		{
 			int[] checkArray = new int[15];
 			Random _random = new Random();
@@ -113,11 +114,11 @@ namespace bank_application
 
 			for (int d = 0; d < 16; d++)
 			{
-				sb.Append(cardNum[d].ToString());
+				sb.Append(cardNum[d].ToString(CultureInfo.CurrentCulture));
 			}
 			return sb.ToString();
 		}
-		private int GenerateCVcode()
+		private static int GenerateCVcode()
 		{
 			Random rand = new Random();
 			int res = rand.Next(999);
@@ -200,8 +201,7 @@ namespace bank_application
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName]string prop = "")
 		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(prop));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 		}
 	}
 }

@@ -18,23 +18,23 @@ namespace bank_application
 			this.ClientGiveCard = ClientGiveCard;
 			this.Sum = Sum;
 		}
-		public void CheckTransaction(Card senderCard, string giveCard, int sum)
+		public void CheckTransaction(Card senderCard, string giveCard, int summ)
 		{
 			Card CardGive = new Card();
 			CardGive = CheckGiveCard(giveCard);
-			UpdateCards(senderCard, CardGive, sum);
+			UpdateCards(senderCard, CardGive, summ);
 			OpenConnection();
-			m_sqlCmd.CommandText = "INSERT INTO transactions ('sendercard', 'givecard','sum') values ('" +
-						senderCard.CardNumber + "' , '" + CardGive.CardNumber + "' , '" + sum + "')";
-			m_sqlCmd.ExecuteNonQuery();
+			SqlCmd.CommandText = "INSERT INTO transactions ('sendercard', 'givecard','sum') values ('" +
+						senderCard.CardNumber + "' , '" + CardGive.CardNumber + "' , '" + summ + "')";
+			SqlCmd.ExecuteNonQuery();
 			CloseConnection();
 		}
-		public void TopUpMobile(Card senderCard, int sum)
+		public static void TopUpMobile(Card senderCard, int sum)
 		{
 			int senderMoney = senderCard.Money - sum;
 			senderCard.UpdateCardMoney(senderCard, senderMoney);
 		}
-		private void UpdateCards(Card cardSend, Card cardGive, int sum)
+		private static void UpdateCards(Card cardSend, Card cardGive, int sum)
 		{
 			int senderMoney = cardSend.Money - sum;
 			int giveMoney = cardGive.Money + sum;
@@ -51,7 +51,7 @@ namespace bank_application
 				clientSend.UpdateCashback(clientSend, cashback);
 			}
 		}
-		public bool CheckPayingCapacity(int sendmoney, int cardmoney)
+		public static bool CheckPayingCapacity(int sendmoney, int cardmoney)
 		{
 			if (sendmoney <= cardmoney)
 			{
@@ -59,7 +59,7 @@ namespace bank_application
 			}
 			return false;
 		}
-		public Card CheckGiveCard(string giveCard)
+		public static Card CheckGiveCard(string giveCard)
 		{
 			Card gcard = new Card(giveCard);
 			if (gcard.GetCurrentCard(gcard) != null)
@@ -102,8 +102,7 @@ namespace bank_application
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName]string prop = "")
 		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(prop));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 		}
 
 	}

@@ -15,9 +15,5 @@ namespace bank_application
 			DataContext = uvm;
 
 		}
-		private void btnClickPayOffDebt(object sender, RoutedEventArgs e)
-		{
-			//перемещение на страницу погашения долга(личного кошелька)
-		}
 	}
 }
