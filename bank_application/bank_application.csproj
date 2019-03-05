@@ -99,10 +99,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\AdminDeterminant.cs" />
+    <Compile Include="Command\Context.cs" />
     <Compile Include="Command\DBhelperClass.cs" />
+    <Compile Include="Command\FirstAlgorythm.cs" />
     <Compile Include="Command\GetPersonalData.xaml.cs">
       <DependentUpon>GetPersonalData.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Command\ICardNumberGenerator.cs" />
+    <Compile Include="Command\SecondAlgorythm.cs" />
     <Compile Include="Connected Services\Service\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

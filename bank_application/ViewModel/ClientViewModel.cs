@@ -32,7 +32,7 @@ namespace bank_application.ViewModel
 		private ObservableCollection<Credit> credits;
 		private ObservableCollection<Deposit> deposits;
 		private ObservableCollection<Card> cards;
-
+		
 
 		/// <summary>
 		/// Credit
@@ -71,6 +71,8 @@ namespace bank_application.ViewModel
 		private string term;
 		private int money;
 		private bool isconfirmcard;
+		private bool firstalg;
+		private bool secondalg;
 
 		/// <summary>
 		/// Transaction
@@ -400,10 +402,20 @@ namespace bank_application.ViewModel
 							if (CardName != null && PIN != null)
 							{
 								int pin = Convert.ToInt32(PIN,CultureInfo.InvariantCulture);
+								int numberOfAlgorythm;
+								if (FirstAlg)
+								{
+									numberOfAlgorythm = 1;
+								}
+								else
+								{
+									numberOfAlgorythm = 2;
+								}
+
 								Card = new Card(1, "3433243432325444", CardName, pin, 544, "03.11.2023",0, Client.Id, IsConfirmCard);
 								if (Card.GetCurrentCard(Card) == null)
 								{
-									Card.AddNewCard(Card);
+									Card.AddNewCard(Card, numberOfAlgorythm);
 									Card = Card.GetCurrentCard(Card);
 									Random rand = new Random();
 									Request = new Request(1, Client.Id, rand.Next(1, 5), Card.Id, DateTime.Now, "Add new card");
@@ -594,6 +606,7 @@ namespace bank_application.ViewModel
 						{
 							Login = Phonenumber;
 						}
+
 						if (FirstName != null && SurName != null && DateOfBirth != null && Email != null && Login != null && Password != null &&
 						Adress != null && PaspSeries != null && PaspNum != null)
 						{
@@ -815,7 +828,24 @@ namespace bank_application.ViewModel
 				OnPropertyChanged("IsConfirmCard");
 			}
 		}
-
+		public bool FirstAlg
+		{
+			get { return firstalg; }
+			set
+			{
+				firstalg = value;
+				OnPropertyChanged("FirstAlg");
+			}
+		}
+		public bool SecondAlg
+		{
+			get { return secondalg; }
+			set
+			{
+				secondalg = value;
+				OnPropertyChanged("SecondAlg");
+			}
+		}
 
 
 		public Deposit SelectedDeposit
@@ -987,8 +1017,6 @@ namespace bank_application.ViewModel
 			credits = value;
 			OnPropertyChanged("Credits");
 		}
-
-
 
 		public string Password
 		{

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bank_application"
         mc:Ignorable="d"
-        Title="AddCard" Height="224.778" Width="243.807" ResizeMode="NoResize" Icon="/bank_application;component/img/bank_78916.png" >
+        Title="AddCard" Height="283.978" Width="255.807" ResizeMode="NoResize" Icon="/bank_application;component/img/bank_78916.png" >
 	<Window.Triggers>
 		<EventTrigger RoutedEvent="Window.Loaded">
 			<EventTrigger.Actions>
@@ -54,7 +54,13 @@
 		<TextBox Text="{Binding CardName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name ="tbcardName" HorizontalAlignment="Left" Height="18" Margin="117,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.813,0.514"/>
 		<Label Content="PIN" HorizontalAlignment="Left" Margin="50,53,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29" RenderTransformOrigin="1.17,0.455"/>
 		<TextBox Text="{Binding PIN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name ="tbPIN" HorizontalAlignment="Left" Height="18" Margin="117,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.813,0.514"/>
-		<Button Command="{Binding AddCardCommand}" Content="Add" MinWidth="50" MinHeight="20" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="92,119,86.6,35.2"/>
-		<CheckBox IsChecked="{Binding Checked}" x:Name ="checkBox1" Content="I agree with all agreenment" HorizontalAlignment="Left" FontFamily="Verdana" FontSize="12" Margin="24,99,0,0" VerticalAlignment="Top"/>
+		<Button Command="{Binding AddCardCommand}" Content="Add" MinWidth="50" MinHeight="20" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="92,199,87.6,21.4"/>
+		<CheckBox IsChecked="{Binding Checked}" x:Name ="checkBox1" Content="I agree with all agreenment" HorizontalAlignment="Left" FontFamily="Verdana" FontSize="12" Margin="33,179,0,0" VerticalAlignment="Top"/>
+		<GroupBox Header="Choose algorythm of card number" Padding="5" Margin="24,81,11.6,89.4" RenderTransformOrigin="0.5,0.5">
+			<StackPanel>
+				<RadioButton IsChecked="{Binding FirstAlg}" Margin="3" Content="Luhn algorythm"/>
+				<RadioButton IsChecked="{Binding SecondAlg}" Margin="3" Content="Random number algorythm"/>
+			</StackPanel>
+		</GroupBox>
 	</Grid>
 </Window>

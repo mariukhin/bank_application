@@ -20,6 +20,7 @@ namespace bank_application
 		private int money;
 		private int clientid;
 		private bool isconfirmcard;
+		private Context context;
 
 		public Card(int Id, string CardNumber,string CardName, int PIN, int CVcode, string Term, int Money, int ClientId, bool IsConfirmCard)
 		{
@@ -39,18 +40,27 @@ namespace bank_application
 			this.CardNumber = CardNumber;
 		}
 
-		public void AddNewCard(Card card)
+		public void AddNewCard(Card card, int numberOfAlgorythm)
 		{
-			//DateTime dt = new DateTime();
-			card.CardNumber = GenerateCardNumber();
+			context = new Context();
+			if (numberOfAlgorythm == 1)
+			{
+				context.SetGenerator(new FirstAlgorythm());
+			}
+			else
+			{
+				context.SetGenerator(new SecondAlgorythm());
+			}
+			card.CardNumber = context.DoSomeBusinessLogic();
 			card.CVcode = GenerateCVcode();
-			//card.Term = GenerateTerm(dt);
 			OpenConnection();
 			SqlCmd.CommandText = "INSERT INTO cards ('cardnumber', 'cardname','pin','cvcode','term','money','client_id') values ('" +
 						card.CardNumber + "' , '" + card.CardName + "' , '" + card.PIN + "' , '" + card.CVcode + "' , '" +
 						card.Term + "' , '" + card.Money + "' , '" + card.ClientId + "')";
 			SqlCmd.ExecuteNonQuery();
 			CloseConnection();
+			//DateTime dt = new DateTime();
+			//card.Term = GenerateTerm(dt);
 		}
 		public void DeleteSelectedCard(int cardId)
 		{
@@ -61,7 +71,6 @@ namespace bank_application
 			SQLiteDataReader reader = SqlCmd.ExecuteReader();
 			CloseConnection();
 		}
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Проверить аргументы или открытые методы", MessageId = "0")]
 		public Card GetCurrentCard(Card card)
 		{
 			OpenConnection();
@@ -95,28 +104,6 @@ namespace bank_application
 			reader = SqlCmd.ExecuteReader();
 			reader.Close();
 			CloseConnection();
-		}
-		private static string GenerateCardNumber()
-		{
-			int[] checkArray = new int[15];
-			Random _random = new Random();
-			var cardNum = new int[16];
-
-			for (int d = 14; d >= 0; d--)
-			{
-				cardNum[d] = _random.Next(0, 9);
-				checkArray[d] = (cardNum[d] * (((d + 1) % 2) + 1)) % 9;
-			}
-
-			cardNum[15] = (checkArray.Sum() * 9) % 10;
-
-			var sb = new StringBuilder();
-
-			for (int d = 0; d < 16; d++)
-			{
-				sb.Append(cardNum[d].ToString(CultureInfo.CurrentCulture));
-			}
-			return sb.ToString();
 		}
 		private static int GenerateCVcode()
 		{

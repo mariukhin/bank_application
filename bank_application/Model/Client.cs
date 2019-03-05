@@ -34,7 +34,7 @@ namespace bank_application
 		/// <param name="Password"></param>
 		/// <param name="Cashback"></param>
 		/// <param name="Moneybox"></param>
-		public Client(int Id,string Firstname, string Surname, string DateOfBirth, string PassportSeries, int PassportNum,
+		public Client(int Id, string Firstname, string Surname, string DateOfBirth, string PassportSeries, int PassportNum,
 			string Adress, string Email, string Phonenumber, string Login, string Password, double Cashback, double Moneybox) : base(Id, Firstname, Surname, DateOfBirth, PassportSeries, PassportNum, Adress, Email, Phonenumber, Password)
 		{
 			this.Id = Id;
