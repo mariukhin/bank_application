@@ -43,7 +43,8 @@ namespace bank_application
 			cardGive.UpdateCardMoney(cardGive, giveMoney);
 
 			Client clientSend = new Client(0, "user", "user", "23.02.1003", "VV", 2349959, "dfddd", "dd@kkd.xc", "243320030", "dfdfsd", "dfdf", 0, 0);
-			Client clientGive = new Client(0, "user", "user", "23.02.1003", "VV", 2349959, "dfddd", "dd@kkd.xc", "243320030", "dfdfsd", "dfdf", 0, 0);
+			Client clientGive = clientSend.GetClone() as Client;
+
 			clientSend = clientSend.GetClientById(cardSend.ClientId);
 			clientGive = clientGive.GetClientById(cardGive.ClientId);
 			if (clientSend.Id != clientGive.Id)
@@ -104,6 +105,5 @@ namespace bank_application
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 		}
-
 	}
 }

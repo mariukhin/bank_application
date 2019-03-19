@@ -20,7 +20,7 @@ namespace bank_application
 		private int money;
 		private int clientid;
 		private bool isconfirmcard;
-		private Context context;
+		private Context context { get { return context ?? new Context(); } }
 
 		public Card(int Id, string CardNumber,string CardName, int PIN, int CVcode, string Term, int Money, int ClientId, bool IsConfirmCard)
 		{
@@ -42,7 +42,6 @@ namespace bank_application
 
 		public void AddNewCard(Card card, int numberOfAlgorythm)
 		{
-			context = new Context();
 			if (numberOfAlgorythm == 1)
 			{
 				context.SetGenerator(new FirstAlgorythm());

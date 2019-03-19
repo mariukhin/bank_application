@@ -1,9 +1,10 @@
-﻿
-using System.Data.SQLite;
+﻿using System.Data.SQLite;
 using System.Data;
+using System;
 
 namespace bank_application.Command
 {
+	[Serializable]
 	public class DBhelperClass
 	{
 		public string DbFileName { get; set; }

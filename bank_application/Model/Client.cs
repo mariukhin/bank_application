@@ -2,13 +2,15 @@
 using System.Collections.ObjectModel;
 using System;
 using System.Globalization;
+using bank_application.Command;
+using System.IO;
 
 namespace bank_application
 {
 	/// <summary>
 	/// Class witch works with user
 	/// </summary>
-    public class Client : User
+	public class Client : User, IPrototype
 	{
 		private ObservableCollection<Credit> credits = new ObservableCollection<Credit>();
 		private ObservableCollection<Deposit> deposits = new ObservableCollection<Deposit>();
@@ -359,6 +361,11 @@ namespace bank_application
 
 			CloseConnection();
 		}
+		public IPrototype GetClone()
+		{
+			return this.MemberwiseClone() as IPrototype;
+		}
+
 		public string Login
 		{
 			get { return login; }
