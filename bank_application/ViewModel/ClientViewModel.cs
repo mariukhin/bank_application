@@ -6,6 +6,7 @@ using bank_application.UI;
 using System.Windows;
 using bank_application.Command;
 using System.Globalization;
+using bank_application.Command.DecoratorPattern;
 
 namespace bank_application.ViewModel
 {
@@ -69,10 +70,17 @@ namespace bank_application.ViewModel
 		private string pin;
 		private int cvcode;
 		private string term;
+		private string cardtype;
 		private int money;
 		private bool isconfirmcard;
 		private bool firstalg;
 		private bool secondalg;
+		private bool visacardtype;
+		private bool mastercardcardtype;
+		private bool electroncardcategory;
+		private bool classiccardcategory;
+		private bool goldcardcategory;
+		private bool platinumcardcategory;
 
 		/// <summary>
 		/// Transaction
@@ -411,8 +419,10 @@ namespace bank_application.ViewModel
 								{
 									numberOfAlgorythm = 2;
 								}
-
-								Card = new Card(1, "3433243432325444", CardName, pin, 544, "03.11.2023",0, Client.Id, IsConfirmCard);
+								CardTypeHelper ct = new CardTypeHelper(VisaCardType, MastercardCardType, ElectronCardCategory,
+									ClassicCardCategory, GoldCardCategory, PlatinumCardCategory);
+								CardType = ct.GetCardType();
+								Card = new Card(1, "3433243432325444", CardName, pin, 544, "03.11.2023", CardType,0, Client.Id, IsConfirmCard);
 								if (Card.GetCurrentCard(Card) == null)
 								{
 									Card.AddNewCard(Card, numberOfAlgorythm);
@@ -801,6 +811,15 @@ namespace bank_application.ViewModel
 				OnPropertyChanged("Term");
 			}
 		}
+		public string CardType
+		{
+			get { return cardtype; }
+			set
+			{
+				cardtype = value;
+				OnPropertyChanged("CardType");
+			}
+		}
 		public Card TopUpMobileCard
 		{
 			get { return topupmobilecard; }
@@ -826,6 +845,60 @@ namespace bank_application.ViewModel
 			{
 				isconfirmcard = value;
 				OnPropertyChanged("IsConfirmCard");
+			}
+		}
+		public bool VisaCardType
+		{
+			get { return visacardtype; }
+			set
+			{
+				visacardtype = value;
+				OnPropertyChanged("VisaCardType");
+			}
+		}
+		public bool MastercardCardType
+		{
+			get { return mastercardcardtype; }
+			set
+			{
+				mastercardcardtype = value;
+				OnPropertyChanged("MastercardCardType");
+			}
+		}
+		public bool ElectronCardCategory
+		{
+			get { return electroncardcategory; }
+			set
+			{
+				electroncardcategory = value;
+				OnPropertyChanged("ElectronCardCategory");
+			}
+		}
+		public bool ClassicCardCategory
+		{
+			get { return classiccardcategory; }
+			set
+			{
+				classiccardcategory = value;
+				OnPropertyChanged("ClassicCardCategory");
+			}
+		}
+		public bool GoldCardCategory
+		{
+			get { return goldcardcategory; }
+			set
+			{
+				goldcardcategory = value;
+				OnPropertyChanged("GoldCardCategory");
+			}
+		}
+		public bool PlatinumCardCategory
+		{
+			get { return platinumcardcategory; }
+			set
+			{
+				platinumcardcategory = value;
+				OnPropertyChanged("PlatinumCardCategory");
 			}
 		}
 		public bool FirstAlg

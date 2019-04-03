@@ -99,6 +99,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\AdminDeterminant.cs" />
+    <Compile Include="Command\DecoratorPattern\CardDecorator.cs" />
+    <Compile Include="Command\DecoratorPattern\CardTypeHelper.cs" />
+    <Compile Include="Command\DecoratorPattern\ClassicCardType.cs" />
+    <Compile Include="Command\DecoratorPattern\ComponentCardType.cs" />
+    <Compile Include="Command\DecoratorPattern\ElectronCardType.cs" />
+    <Compile Include="Command\DecoratorPattern\GoldCardType.cs" />
+    <Compile Include="Command\DecoratorPattern\MasterCard.cs" />
+    <Compile Include="Command\DecoratorPattern\PlatinumCardType.cs" />
+    <Compile Include="Command\DecoratorPattern\VisaCard.cs" />
     <Compile Include="Command\StrategyPattern\Context.cs" />
     <Compile Include="Command\DBhelperClass.cs" />
     <Compile Include="Command\StrategyPattern\FirstAlgorythm.cs" />
@@ -345,6 +354,25 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\1365517579_wall-08.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\mastercard.png" />
+    <Resource Include="img\visa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\gold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\platinum.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\electron2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\classic2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" />

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bank_application"
         mc:Ignorable="d"
-        Title="AddCard" Height="283.978" Width="255.807" ResizeMode="NoResize" Icon="/bank_application;component/img/bank_78916.png" >
+        Title="AddCard" Height="471.393" Width="379.08" ResizeMode="NoResize" Icon="/bank_application;component/img/bank_78916.png" >
 	<Window.Triggers>
 		<EventTrigger RoutedEvent="Window.Loaded">
 			<EventTrigger.Actions>
@@ -50,16 +50,58 @@
 		</Style>
 	</Window.Resources>
 	<Grid Background="#FFF3DEDE">
-		<Label Content="Card Name" HorizontalAlignment="Left" Margin="24,19,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29"/>
-		<TextBox Text="{Binding CardName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name ="tbcardName" HorizontalAlignment="Left" Height="18" Margin="117,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.813,0.514"/>
-		<Label Content="PIN" HorizontalAlignment="Left" Margin="50,53,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29" RenderTransformOrigin="1.17,0.455"/>
-		<TextBox Text="{Binding PIN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name ="tbPIN" HorizontalAlignment="Left" Height="18" Margin="117,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.813,0.514"/>
-		<Button Command="{Binding AddCardCommand}" Content="Add" MinWidth="50" MinHeight="20" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="92,199,87.6,21.4"/>
-		<CheckBox IsChecked="{Binding Checked}" x:Name ="checkBox1" Content="I agree with all agreenment" HorizontalAlignment="Left" FontFamily="Verdana" FontSize="12" Margin="33,179,0,0" VerticalAlignment="Top"/>
-		<GroupBox Header="Choose algorythm of card number" Padding="5" Margin="24,81,11.6,89.4" RenderTransformOrigin="0.5,0.5">
+		<Label Content="Card Name" HorizontalAlignment="Left" Margin="30,17,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29"/>
+		<TextBox Text="{Binding CardName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name ="tbcardName" HorizontalAlignment="Left" Height="18" Margin="123,17,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" RenderTransformOrigin="0.813,0.514"/>
+		<Label Content="PIN" HorizontalAlignment="Left" Margin="56,51,0,0" VerticalAlignment="Top" FontFamily="Verdana" FontSize="12" Background="#00000000" Foreground="Black" FontWeight="Bold" Height="29" RenderTransformOrigin="1.17,0.455"/>
+		<TextBox Text="{Binding PIN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name ="tbPIN" HorizontalAlignment="Left" Height="18" Margin="123,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" RenderTransformOrigin="0.813,0.514"/>
+		<Button Command="{Binding AddCardCommand}" Content="Add" MinWidth="50" MinHeight="20" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" Margin="144,381,117.8,21.6"/>
+		<CheckBox IsChecked="{Binding Checked}" x:Name ="checkBox1" Content="I agree with all agreenment" HorizontalAlignment="Left" FontFamily="Verdana" FontSize="12" Margin="95,351,0,0" VerticalAlignment="Top"/>
+		<GroupBox Header="Choose algorythm of card number" Padding="5" Margin="30,79,29.8,282.2" RenderTransformOrigin="0.5,0.5">
+			<StackPanel Margin="0,0,0.4,-6">
+				<RadioButton IsChecked="{Binding FirstAlg}" Margin="3" Content="Luhn algorythm" Cursor="Hand"/>
+				<RadioButton IsChecked="{Binding SecondAlg}" Margin="3" Content="Random number algorythm" Cursor="Hand"/>
+			</StackPanel>
+		</GroupBox>
+		<GroupBox Header="Choose card type" Padding="5" Margin="30,158,29.8,203.2" RenderTransformOrigin="0.5,0.5">
 			<StackPanel>
-				<RadioButton IsChecked="{Binding FirstAlg}" Margin="3" Content="Luhn algorythm"/>
-				<RadioButton IsChecked="{Binding SecondAlg}" Margin="3" Content="Random number algorythm"/>
+				<RadioButton IsChecked="{Binding VisaCardType}" Cursor="Hand">
+					<WrapPanel>
+						<Image Source="/img/visa.png" Margin="3, 0, 100, 0" Width="64" Height="40" />
+					</WrapPanel>
+				</RadioButton>
+				<RadioButton IsChecked="{Binding MastercardCardType}"  Margin="0, -40, -150, 10"  Width="80" Height="40" Cursor="Hand">
+					<WrapPanel>
+						<Image Source="/img/mastercard.png" Width="62" Height="40"/>
+					</WrapPanel>
+				</RadioButton>
+			</StackPanel>
+		</GroupBox>
+		<GroupBox Header="Choose card category" Padding="5" Margin="10,237,9.8,104.2" RenderTransformOrigin="0.5,0.5">
+			<StackPanel>
+				<RadioButton IsChecked="{Binding ElectronCardCategory}" Margin="0,0,236.6,10"  Width="80" Height="62" Cursor="Hand">
+					<WrapPanel>
+						<Image Source="/img/electron2.png" Margin="6, 0, 0, 0" Width="54" Height="44" />
+						<TextBlock Text="Electron" Foreground="Black" Margin="10, 0, 0, 0" RenderTransformOrigin="0.977,0.588"/>
+					</WrapPanel>
+				</RadioButton>
+				<RadioButton IsChecked="{Binding ClassicCardCategory}"  Margin="83,-90,150.4,-10" Width="80" Height="60" Cursor="Hand">
+					<WrapPanel>
+						<Image Source="/img/classic2.png" Width="54" Height="44"/>
+						<TextBlock Text="Classic" Foreground="Black" Margin="10, 0, 10, 0"/>
+					</WrapPanel>
+				</RadioButton>
+				<RadioButton IsChecked="{Binding GoldCardCategory}"  Margin="0, -70, -90, 10"  Width="80" Height="60" Cursor="Hand">
+					<WrapPanel>
+						<Image Source="/img/gold.png" Width="54" Height="44"/>
+						<TextBlock Text="Gold" Foreground="Black" Margin="13, 0, 10, 0"/>
+					</WrapPanel>
+				</RadioButton>
+				<RadioButton IsChecked="{Binding PlatinumCardCategory}"  Margin="5, -70, -240, 10"  Width="80" Height="60" Cursor="Hand">
+					<WrapPanel>
+						<Image Source="/img/platinum.png" Width="54" Height="44"/>
+						<TextBlock Text="Platinum" Foreground="Black" Margin="3, 0, 10, 0"/>
+					</WrapPanel>
+				</RadioButton>
 			</StackPanel>
 		</GroupBox>
 	</Grid>

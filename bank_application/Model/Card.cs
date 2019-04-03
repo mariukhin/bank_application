@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Data.SQLite;
 using bank_application.Command;
-using System.Globalization;
 
 namespace bank_application
 {
@@ -16,19 +13,21 @@ namespace bank_application
 		private string cardname;
 		private int pin;
 		private int cvcode;
+		private string cardtype;
 		private string term;
 		private int money;
 		private int clientid;
 		private bool isconfirmcard;
-		private Context context { get { return context ?? new Context(); } }
+		private Context context;
 
-		public Card(int Id, string CardNumber,string CardName, int PIN, int CVcode, string Term, int Money, int ClientId, bool IsConfirmCard)
+		public Card(int Id, string CardNumber,string CardName, int PIN, int CVcode, string Term, string CardType, int Money, int ClientId, bool IsConfirmCard)
 		{
 			this.Id = Id;
 			this.CardNumber = CardNumber;
 			this.CardName = CardName;
 			this.PIN = PIN;
 			this.CVcode = CVcode;
+			this.CardType = CardType;
 			this.Term = Term;
 			this.Money = Money;
 			this.ClientId = ClientId;
@@ -42,6 +41,7 @@ namespace bank_application
 
 		public void AddNewCard(Card card, int numberOfAlgorythm)
 		{
+			context = new Context();
 			if (numberOfAlgorythm == 1)
 			{
 				context.SetGenerator(new FirstAlgorythm());
@@ -53,9 +53,9 @@ namespace bank_application
 			card.CardNumber = context.DoSomeBusinessLogic();
 			card.CVcode = GenerateCVcode();
 			OpenConnection();
-			SqlCmd.CommandText = "INSERT INTO cards ('cardnumber', 'cardname','pin','cvcode','term','money','client_id') values ('" +
+			SqlCmd.CommandText = "INSERT INTO cards ('cardnumber', 'cardname','pin','cvcode','term', 'cardtype','money','client_id') values ('" +
 						card.CardNumber + "' , '" + card.CardName + "' , '" + card.PIN + "' , '" + card.CVcode + "' , '" +
-						card.Term + "' , '" + card.Money + "' , '" + card.ClientId + "')";
+						card.Term + "' , '" + card.CardType + "' , '" + card.Money + "' , '" + card.ClientId + "')";
 			SqlCmd.ExecuteNonQuery();
 			CloseConnection();
 			//DateTime dt = new DateTime();
@@ -82,7 +82,7 @@ namespace bank_application
 			if (reader.Read())
 			{
 				card = new Card(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3),
-					reader.GetInt32(4), reader.GetString(5), reader.GetInt32(6), reader.GetInt32(7), CheckConfirm(reader.GetInt32(8)));
+					reader.GetInt32(4), reader.GetString(5), reader.GetString(6), reader.GetInt32(7), reader.GetInt32(8), CheckConfirm(reader.GetInt32(9)));
 				reader.Close();
 				CloseConnection();
 				return card;
@@ -146,6 +146,15 @@ namespace bank_application
 			{
 				cvcode = value;
 				OnPropertyChanged("CVcode");
+			}
+		}
+		public string CardType
+		{
+			get { return cardtype; }
+			set
+			{
+				cardtype = value;
+				OnPropertyChanged("CardType");
 			}
 		}
 		public string Term

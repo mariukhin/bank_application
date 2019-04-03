@@ -76,7 +76,7 @@
 	<NavigationWindow.Content>
 		<Grid>
 			<Grid.Background>
-				<ImageBrush ImageSource="main.jpg"/>
+				<ImageBrush ImageSource="/bank_application;component/img/1365517579_wall-08.jpg"/>
 			</Grid.Background>
 			<StackPanel Margin="0,47,0,0" Orientation="Vertical" Height="350" HorizontalAlignment="Left" VerticalAlignment="Top">
 				<Button Content="Credits" MinWidth="105" MinHeight="50"  Click="btnClickCredits" FontFamily="Verdana" BorderBrush="{DynamicResource DefaultedBorderBrush}" />

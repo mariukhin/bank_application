@@ -196,7 +196,7 @@ namespace bank_application
 			while (reader.Read())
 			{
 				Card card = new Card(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3),
-					reader.GetInt32(4), reader.GetString(5), reader.GetInt32(6), reader.GetInt32(7), CheckConfirm(reader.GetInt32(8)));
+					reader.GetInt32(4), reader.GetString(5), reader.GetString(6), reader.GetInt32(7), reader.GetInt32(8), CheckConfirm(reader.GetInt32(9)));
 				Cards.Add(card);
 			}
 			CloseConnection();
@@ -226,7 +226,7 @@ namespace bank_application
 				int offence = client.CalcCredit(credit.Duration, credit.Number, credit.DateCredit);
 				if (offence != 0)
 				{
-					Card card = new Card(1, credit.CardNumber, "dffdsfwef", 2355, 544, "03.11.2023", 0, 2, true);
+					Card card = new Card(1, credit.CardNumber, "dffdsfwef", 2355, 544, "03.11.2023", "Visa Classic", 0, 2, true);
 					card = card.GetCurrentCard(card);
 					int newCardMoney = card.Money - offence;
 					card.UpdateCardMoney(card, newCardMoney);
@@ -257,7 +257,7 @@ namespace bank_application
 				double pay = client.CalcDeposit(deposit.Duration, deposit.Number, deposit.DateDeposit);
 				if (pay != 0)
 				{
-					Card card = new Card(1, deposit.CardNumber, "dffdsfwef", 2355, 544, "03.11.2023", 0, 2, true);
+					Card card = new Card(1, deposit.CardNumber, "dffdsfwef", 2355, 544, "03.11.2023", "Visa Classic", 0, 2, true);
 					card = card.GetCurrentCard(card);
 					int newCardMoney = card.Money + (int)pay;
 					card.UpdateCardMoney(card, newCardMoney);
