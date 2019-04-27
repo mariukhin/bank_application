@@ -622,10 +622,10 @@ namespace bank_application.ViewModel
 						{
 							int paspNum = Convert.ToInt32(PaspNum, CultureInfo.InvariantCulture);
 							Client = new Client(1, FirstName, SurName, DateOfBirth, PaspSeries, paspNum ,Adress, Email, Phonenumber, Login, Password, 0, 0);
-							if (Client.AuthClient(Client) == null)
+							if (Client.Authentificate(Client) == null)
 							{
 								Client.AddNewClient(Client);
-								Client = Client.AuthClient(Client);
+								Client = Client.Authentificate(Client);
 								Application.Current.Windows[2].Close();
 							}
 							else
@@ -652,12 +652,12 @@ namespace bank_application.ViewModel
 						if (Login != null && Password != null)
 						{
 								client = new Client(0, "user", "user", "23.02.1003", "VV", 2349959, "dfddd", "dd@kkd.xc", "243320030", Login, Password, 0.0, 0);
-								if (Client.AuthClient(Client) != null)
+								if (Client.Authentificate(Client) != null)
 								{
-									Client = Client.AuthClient(Client);
-								SetCredits(Client.CreateCredits(Client.Id));
-								SetDeposits(Client.CreateDeposits(Client.Id));
-								SetCards(Client.CreateCards(Client.Id));
+									Client = Client.Authentificate(Client);
+									SetCredits(Client.CreateCredits(Client.Id));
+									SetDeposits(Client.CreateDeposits(Client.Id));
+									SetCards(Client.CreateCards(Client.Id));
 									ClientName = "Client: " + Client.Firstname + ' ' + Client.Surname;
 									MainWindow mainWindow = new MainWindow(this);
 									mainWindow.Show();
@@ -1110,7 +1110,7 @@ namespace bank_application.ViewModel
 				OnPropertyChanged("Login");
 			}
 		}
-		public Client Client
+		Client Client
 		{
 			get { return client; }
 			set

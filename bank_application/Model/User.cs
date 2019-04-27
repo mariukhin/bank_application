@@ -4,8 +4,17 @@ using System.Runtime.CompilerServices;
 
 namespace bank_application
 {
-	public class User: DBhelperClass, INotifyPropertyChanged
+	abstract class User<T> : DBhelperClass, INotifyPropertyChanged where T : class
 	{
+
+		public T Authentificate(T obj)
+		{
+			return Auth(obj);
+		}
+		public abstract T Auth(T obj);
+
+
+
 		public int Id { get; set; }
 		private string firstname;
 		private string surname;
@@ -31,6 +40,8 @@ namespace bank_application
 			this.Phonenumber = Phonenumber;
 			this.Password = Password;
 		}
+
+
 		public string Firstname
 		{
 			get { return firstname; }

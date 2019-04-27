@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Navigation;
+using bank_application.Command.VisitorPattern;
 using bank_application.ViewModel;
 
 namespace bank_application
@@ -40,6 +41,9 @@ namespace bank_application
 		private void btnClickPersonalData(object sender, RoutedEventArgs e)
 		{
 			Main.Content = new PersonalData(nuvm);
+			var structure = new BankStructure();
+			structure.Add(new Client(1, nuvm.ClientName , nuvm.SurName, "dfdfdf", "VV", 2349959,"dfddd", nuvm.Email, nuvm.Phonenumber, "ffF", nuvm.Password, 0, 0)); 
+			structure.Accept(new InfoVisitor());
 		}
 		private void btnCloseClick(object sender, RoutedEventArgs e)
 		{

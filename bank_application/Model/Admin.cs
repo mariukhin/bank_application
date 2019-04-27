@@ -1,11 +1,12 @@
-﻿using System;
+﻿using bank_application.Command.VisitorPattern;
+using System;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Globalization;
 
 namespace bank_application
 {
-	public class Admin : User
+	class Admin : User<Admin>, IAccount
 	{
 		private ObservableCollection<Request> requests = new ObservableCollection<Request>();
 
@@ -24,7 +25,7 @@ namespace bank_application
 			this.Password = password;
 			
 		}
-		public Admin AuthAdmin(Admin admin)
+		public override Admin Auth(Admin admin)
 		{
 			Admin newAdmin = CheckAdmin(admin);
 			if (newAdmin != null)
@@ -166,6 +167,11 @@ namespace bank_application
 		public override string ToString()
 		{
 			return Id + '|' + Email + '|' + Surname + '|' + PassportNum + '|' + Firstname + '|' + DateOfBirth;
+		}
+
+		public void Accept(IVisitor visitor)
+		{
+			visitor.VisitAdminAc(this);
 		}
 	}
 }

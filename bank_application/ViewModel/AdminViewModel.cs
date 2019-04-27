@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using System.Windows;
 using bank_application.Command;
+using bank_application.Command.VisitorPattern;
 
 namespace bank_application.ViewModel
 {
@@ -21,6 +22,20 @@ namespace bank_application.ViewModel
 		{
 			this.Login = Login;
 			this.Password = Password;
+		}
+		private RelayCommand showInfoCommand;
+		public RelayCommand ShowInfoCommand
+		{
+			get
+			{
+				return showInfoCommand ??
+					(showInfoCommand = new RelayCommand(obj =>
+					{
+						var structure = new BankStructure();
+						structure.Add(Admin);
+						structure.Accept(new InfoVisitor());
+					}));
+			}
 		}
 		private RelayCommand rejectrequestCommand;
 		public RelayCommand RejectRequestCommand
@@ -60,9 +75,9 @@ namespace bank_application.ViewModel
 						if (Login != null && Password != null)
 						{
 							Admin = new Admin(0, "user", "user", "23.02.1003", "VV", 2349959, "dfddd", "dd@kkd.xc", "243320030", Password);
-							if (Admin.AuthAdmin(Admin) != null)
+							if (Admin.Authentificate(Admin) != null)
 							{
-								Admin = Admin.AuthAdmin(Admin);
+								Admin = Admin.Authentificate(Admin);
 								SetRequests(Admin.CreateRequests(Admin.Id));
 								AdminName = "Admin: "+ Admin.Firstname + ' ' + Admin.Surname;
 								AdminWindow adminWindow = new AdminWindow(this);
@@ -109,7 +124,7 @@ namespace bank_application.ViewModel
 				OnPropertyChanged("AdminName");
 			}
 		}
-		public Admin Admin
+		Admin Admin
 		{
 			get { return admin; }
 			set

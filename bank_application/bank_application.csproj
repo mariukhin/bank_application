@@ -117,12 +117,17 @@
     <Compile Include="Command\StrategyPattern\ICardNumberGenerator.cs" />
     <Compile Include="Command\PrototypePattern\IPrototype.cs" />
     <Compile Include="Command\StrategyPattern\SecondAlgorythm.cs" />
+    <Compile Include="Command\VisitorPattern\BankStructure.cs" />
+    <Compile Include="Command\VisitorPattern\IAccount.cs" />
+    <Compile Include="Command\VisitorPattern\InfoVisitor.cs" />
+    <Compile Include="Command\VisitorPattern\IVisitor.cs" />
     <Compile Include="Connected Services\Service\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Model\Company.cs" />
     <Compile Include="UI\AddCard.xaml.cs">
       <DependentUpon>AddCard.xaml</DependentUpon>
     </Compile>
